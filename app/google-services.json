@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "710647986518",
+    "project_id": "raftaarquiz",
+    "storage_bucket": "raftaarquiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710647986518:android:028f63d251c6ed01cefef7",
+        "android_client_info": {
+          "package_name": "com.example.raftaarquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710647986518-p5duv7ps23vp52e00djg2q63pd9m2rqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmNtrDKEfIR4c6VbZra507ri_F7dpt918"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710647986518-p5duv7ps23vp52e00djg2q63pd9m2rqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
