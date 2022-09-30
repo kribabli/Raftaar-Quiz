@@ -174,6 +174,10 @@
         android:gravity="center"
         android:weightSum="8.8">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/withdrawal" />
 
         <View
             android:layout_width="5dp"
@@ -310,8 +314,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_logout_24" />
+            android:layout_height="20dp"
+            android:drawableLeft="@drawable/person_logo" />
 
         <View
             android:layout_width="5dp"
