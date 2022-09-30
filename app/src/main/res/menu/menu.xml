@@ -10,7 +10,7 @@
     <item
         android:id="@+id/leaderboard"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_home_24"
+        android:icon="@drawable/group__4_"
         android:title="Leaderboard" />
 
     <item

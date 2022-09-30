@@ -3,23 +3,27 @@ package com.example.raftaarquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.raftaarquiz.BottomFragments.HomeFragment;
 import com.example.raftaarquiz.BottomFragments.LeaderBoardFragment;
 import com.example.raftaarquiz.BottomFragments.MyDownloadFragment;
 import com.example.raftaarquiz.BottomFragments.MyProfileFragment;
+import com.example.raftaarquiz.LoginModule.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     private FragmentManager fragmentManager;
+    Toolbar toolbar_main;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,69 +49,122 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setAction();
         googleSignIn();
 
-        fragmentManager = getSupportFragmentManager();
-        HomeFragment homeFragment = new HomeFragment();
-        loadFragment(homeFragment, fragmentManager);
+        setSupportActionBar(toolbar_main);
 
         new Thread(this::mBottomNavigationBar).start();
+        fragmentManager = getSupportFragmentManager();
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.start, R.string.close);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar_main, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
 
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        toolbar_main.setNavigationIcon(R.drawable.ic_baseline_person_24);
+
+        NavigationView navigationView = findViewById(R.id.NavigationView);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            drawerLayout.closeDrawers();
+            switch (item.getItemId()) {
+                case R.id.profile:
+                    HomeFragment homeFragment = new HomeFragment();
+                    loadFragment(homeFragment, getString(R.string.menu_home), fragmentManager);
+                    return true;
+                default:
+                    return true;
+            }
+        });
+        HomeFragment homeFragment = new HomeFragment();
+        loadFragment(homeFragment, "Home", fragmentManager);
     }
 
     private void initMethod() {
+        toolbar_main = findViewById(R.id.toolbar_main);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.NavigationView);
     }
 
     private void setAction() {
+        setSupportActionBar(toolbar_main);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar_main, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        toolbar_main.setNavigationIcon(R.drawable.ic_baseline_home_24);
     }
 
-    private void loadFragment(Fragment f1, FragmentManager fm) {
+    private void userLogout() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        gsc.signOut();
+        Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadFragment(Fragment f1, String name, FragmentManager fm) {
         for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragment_container, f1);
+        ft.replace(R.id.fragment_container, f1, name);
         ft.commit();
+        setToolbarTitle(name);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    public void setToolbarTitle(String Title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(Title);
+        }
+    }
+
     private void mBottomNavigationBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                boolean bool = false;
-                if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
-                    switch (item.getItemId()) {
-                        case R.id.home:
-                            bool = true;
-                            HomeFragment homeFragment = new HomeFragment();
-                            loadFragment(homeFragment, fragmentManager);
-                            break;
-                        case R.id.leaderboard:
-                            bool = true;
-                            LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
-                            loadFragment(leaderBoardFragment, fragmentManager);
-                            break;
-                        case R.id.download:
-                            bool = true;
-                            MyDownloadFragment myDownloadFragment = new MyDownloadFragment();
-                            loadFragment(myDownloadFragment, fragmentManager);
-                            break;
-                        case R.id.profile:
-                            bool = true;
-                            MyProfileFragment myProfileFragment = new MyProfileFragment();
-                            loadFragment(myProfileFragment, fragmentManager);
-                            break;
-                    }
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            boolean bool = false;
+            if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        bool = true;
+                        HomeFragment homeFragment = new HomeFragment();
+                        loadFragment(homeFragment, "Home", fragmentManager);
+                        break;
+                    case R.id.leaderboard:
+                        LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
+                        loadFragment(leaderBoardFragment, "LeaderBoard", fragmentManager);
+                        bool = true;
+                        break;
+                    case R.id.download:
+                        MyDownloadFragment myDownloadFragment = new MyDownloadFragment();
+                        loadFragment(myDownloadFragment, "My Download", fragmentManager);
+                        bool = true;
+                        break;
+                    case R.id.Profile:
+                        MyProfileFragment myProfileFragment = new MyProfileFragment();
+                        loadFragment(myProfileFragment, "My Profile", fragmentManager);
+                        bool = true;
+                        break;
                 }
-                return bool;
             }
+            return bool;
         });
     }
 
@@ -124,6 +183,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.logout:
+                userLogout();
+                return true;
         }
         return true;
     }
@@ -145,9 +207,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (fragmentManager.getBackStackEntryCount() != 0) {
+            String tag = fragmentManager.getFragments().get(fragmentManager.getBackStackEntryCount() - 1).getTag();
+            setToolbarTitle(tag);
             super.onBackPressed();
-            finish();
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, getString(R.string.back_key), Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 1000);
         }
     }
 }
