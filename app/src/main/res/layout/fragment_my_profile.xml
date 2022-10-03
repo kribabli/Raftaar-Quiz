@@ -26,9 +26,9 @@
                 android:layout_width="95dp"
                 android:layout_height="95dp"
                 android:layout_gravity="center"
-                android:src="@drawable/game_logo"
                 android:layout_marginVertical="10dp"
                 android:layout_marginStart="10dp"
+                android:src="@drawable/game_logo"
                 android:visibility="visible"
                 app:civ_border_color="#efefef"
                 app:civ_border_width="2dp"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/linearlayoutProfile"
             android:layout_marginBottom="20dp"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -52,20 +52,10 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="User Name"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="#5EB7DA"
-                android:gravity="center"
-                android:padding="2dp"
-                android:text="rahul@gmail.com"
-                android:textColor="@color/white"
-                android:textSize="15sp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -127,7 +117,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:weightSum="8.8">
+        android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
@@ -137,7 +127,7 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_weight=".8" />
+            android:layout_weight=".5" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -172,7 +162,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:weightSum="8.8">
+        android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
@@ -182,7 +172,7 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_weight=".8" />
+            android:layout_weight=".5" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -218,7 +208,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:weightSum="8.8">
+        android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
@@ -228,7 +218,7 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_weight=".8" />
+            android:layout_weight=".5" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -264,7 +254,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:weightSum="8.8">
+        android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
@@ -274,14 +264,13 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_weight=".8" />
+            android:layout_weight=".5" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="3"
-
             android:gravity="left"
             android:text="Wallet"
             android:textColor="@color/black"
@@ -310,7 +299,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:weightSum="8.4">
+        android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
@@ -320,7 +309,7 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_weight=".4" />
+            android:layout_weight=".5" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -355,7 +344,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:weightSum="8.4">
+        android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
@@ -365,7 +354,7 @@
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_weight=".4" />
+            android:layout_weight=".5" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     HomeFragment homeFragment = new HomeFragment();
                     loadFragment(homeFragment, getString(R.string.menu_home), fragmentManager);
                     return true;
+                case R.id.logout:
+                    userLogout();
+                    return true;
                 default:
                     return true;
             }
@@ -178,16 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.profile:
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.logout:
-                userLogout();
-                return true;
-        }
-        return true;
+        return false;
     }
 
     private void googleSignIn() {
