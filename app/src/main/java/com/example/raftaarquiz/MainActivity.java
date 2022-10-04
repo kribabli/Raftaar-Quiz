@@ -74,9 +74,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
             switch (item.getItemId()) {
-                case R.id.profile:
-                    HomeFragment homeFragment = new HomeFragment();
-                    loadFragment(homeFragment, getString(R.string.menu_home), fragmentManager);
+                case R.id.privacyPolicy:
+                    startActivity(new Intent(this, AboutUsActivity.class));
+                    return true;
+                case R.id.aboutUs:
+                    startActivity(new Intent(this, AboutUsActivity.class));
+                    return true;
+                case R.id.share:
+                    startActivity(new Intent(this, AboutUsActivity.class));
                     return true;
                 case R.id.logout:
                     userLogout();
