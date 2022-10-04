@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
     TextView login;
     Button SignUp;
-    EditText userNumber,password,email,userName;
+    EditText userNumber, password, email, userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,21 +88,23 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void sendUserData() {
+        Log.d("TAG", "sendUserData: " + userName.getText().toString() + email.getText().toString() + userNumber.getText().toString() + password.getText().toString());
+
         Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
-                SendUserDetails_server(userName.getText().toString(), email.getText().toString(), userNumber.getText().toString(),password.getText().toString(),"");
+                SendUserDetails_server(userName.getText().toString(), email.getText().toString(), userNumber.getText().toString(), password.getText().toString(), "");
         call.enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                 RegistrationResponse registrationResponse = response.body();
                 if (response.isSuccessful()) {
-                    if (registrationResponse.getResponse().equalsIgnoreCase("Email already exist")) {
-                        showDialog("" + registrationResponse.getResponse(), true);
-                    }
-                    if (registrationResponse.getResponse().equalsIgnoreCase("Mobile no already exist")) {
-                        showDialog("" + registrationResponse.getResponse(), true);
+                    Log.d("TAG", "onResponse:1 " + response.toString());
+                    if (registrationResponse.getResponse().equalsIgnoreCase("User Already exist")) {
+                        showDialog("" + registrationResponse.getResponse(), false);
+                        Log.d("TAG", "onResponse: " + response.body());
                     }
                     if (registrationResponse.getResponse().equalsIgnoreCase("Registration Successfully")) {
                         showDialog("User Register Successfully..", true);
+                        Log.d("TAG", "onResponse:33 " + response.body());
                     }
                 }
             }
