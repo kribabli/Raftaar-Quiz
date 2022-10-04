@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+
     public void showDialog(String message, Boolean isFinish) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);

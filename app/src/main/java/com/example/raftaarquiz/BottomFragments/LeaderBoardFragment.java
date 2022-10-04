@@ -41,6 +41,7 @@ public class LeaderBoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root= inflater.inflate(R.layout.fragment_leaderboard, container, false);
+
         return root;
     }
 }

@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onDrawerOpened(drawerView);
             }
         };
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         toolbar_main.setNavigationIcon(R.drawable.ic_baseline_home_24);
