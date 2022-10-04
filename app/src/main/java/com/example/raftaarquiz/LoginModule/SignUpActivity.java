@@ -39,6 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
         userName = findViewById(R.id.userName);
+        if(getIntent().hasExtra("userEmail")){
+            email.setText(""+getIntent().getStringExtra("userEmail"));
+        }
     }
 
     private void setAction() {

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     String url = "https://adminapp.tech/raftarquiz/all_apis.php?func=google_login";
     String userName, userEmail;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initMethod() {
         signUp = findViewById(R.id.signUp);
+        progressBar = findViewById(R.id.progressBar);
         googleLogo = findViewById(R.id.googleLogo);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
@@ -104,10 +107,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getString("message").equalsIgnoreCase("Invalid user ")) {
+                    if(jsonObject.getString("status").equalsIgnoreCase("False")){
                         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                        intent.putExtra("userEmail",userEmail);
                         startActivity(intent);
                         finish();
+
+
                     } else if (jsonObject.getString("message").equalsIgnoreCase("Login successfully " + userName)) {
                         String userId = jsonObject.getString("userid");
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
