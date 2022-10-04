@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -105,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    Log.d("TAG", "onResponse: "+jsonObject);
                     if (jsonObject.getString("message").equalsIgnoreCase("Invalid user ")) {
                         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                         startActivity(intent);

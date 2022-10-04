@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout1"
     android:layout_width="match_parent"
@@ -45,11 +44,25 @@
         tools:ignore="NotSibling">
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="50dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/border_radius"
+            android:hint="User Name"
+            android:inputType="textVisiblePassword"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/blue2" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/border_radius"
             android:hint="Email Address"
@@ -59,7 +72,7 @@
             android:textColorHint="@color/blue2" />
 
         <EditText
-            android:id="@+id/password1"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
@@ -73,14 +86,14 @@
             android:textColorHint="@color/blue2" />
 
         <EditText
-            android:id="@+id/password2"
+            android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/border_radius"
-            android:hint="Confirm Password"
+            android:hint="Number"
             android:inputType="textVisiblePassword"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
@@ -113,12 +126,12 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="center"
                 android:padding="2dp"
-                android:id="@+id/login"
                 android:text="Login"
                 android:textColor="@color/blue"
                 android:textSize="20sp"
