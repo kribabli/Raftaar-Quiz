@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -41,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     String url = "https://adminapp.tech/raftarquiz/all_apis.php?func=google_login";
     String userName, userEmail;
     ProgressBar progressBar;
+    String Login_url = "https://adminapp.tech/raftarquiz/userapi/login.php";
+    Button loginBtn;
+    EditText email, password1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
         signUp = findViewById(R.id.signUp);
         progressBar = findViewById(R.id.progressBar);
         googleLogo = findViewById(R.id.googleLogo);
+        loginBtn = findViewById(R.id.loginBtn);
+        password1 = findViewById(R.id.password1);
+        email = findViewById(R.id.email);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
     }
@@ -70,6 +79,66 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validation();
+            }
+        });
+    }
+
+    private boolean validation() {
+        boolean isValid = true;
+        if (email.getText().toString().trim().length() == 0) {
+            email.setError("Please enter user name");
+            email.requestFocus();
+            isValid = false;
+        } else if (password1.getText().toString().trim().length() == 0) {
+            password1.setError("Please enter email");
+            password1.requestFocus();
+            isValid = false;
+        } else {
+            loginUserDeatil();
+        }
+        return isValid;
+    }
+
+    private void loginUserDeatil() {
+        progressBar.setVisibility(View.VISIBLE);
+        loginBtn.setVisibility(View.GONE);
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Login_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("message").equalsIgnoreCase("")) {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                loginBtn.setVisibility(View.VISIBLE);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email.getText().toString());
+                params.put("password", password1.getText().toString());
+                return params;
+            }
+
+        };
+        queue.add(stringRequest);
+
     }
 
     private void googleSignIn() {
@@ -107,13 +176,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if(jsonObject.getString("status").equalsIgnoreCase("False")){
+                    if (jsonObject.getString("status").equalsIgnoreCase("False")) {
                         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                        intent.putExtra("userEmail",userEmail);
+                        intent.putExtra("userEmail", userEmail);
                         startActivity(intent);
                         finish();
-
-
                     } else if (jsonObject.getString("message").equalsIgnoreCase("Login successfully " + userName)) {
                         String userId = jsonObject.getString("userid");
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

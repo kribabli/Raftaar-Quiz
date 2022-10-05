@@ -94,7 +94,7 @@
             android:layout_marginRight="30dp"
             android:background="@drawable/border_radius"
             android:hint="Number"
-            android:inputType="textVisiblePassword"
+            android:inputType="number"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/blue2" />
@@ -108,6 +108,18 @@
             android:backgroundTint="@color/blue"
             android:text="SignUp"
             android:textColor="#fff" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/blue"
+            android:text="SignUp"
+            android:textColor="#fff"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"

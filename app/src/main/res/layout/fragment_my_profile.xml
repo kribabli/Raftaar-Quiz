@@ -41,8 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearlayoutProfile"
-            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -50,10 +50,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:text="User Name"
                 android:layout_marginVertical="10dp"
                 android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="User Name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -67,16 +67,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/linerLayout"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/ic_baseline_edit_24" />
 
         <View
@@ -103,6 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
@@ -112,16 +114,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/linearlayout1"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/ic_baseline_lock_reset_24" />
 
         <View
@@ -148,6 +151,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
@@ -157,16 +161,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/linearlayout2"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/withdrawal" />
 
         <View
@@ -194,6 +199,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
@@ -203,16 +209,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/linearlayout3"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/ic_baseline_wallet_24" />
 
         <View
@@ -240,6 +247,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
@@ -249,16 +257,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/linearlayout4"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/ic_baseline_account_balance_wallet_24" />
 
         <View
@@ -285,6 +294,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
@@ -294,16 +304,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/linearlayout5"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/ic_baseline_supervisor_account_24" />
 
         <View
@@ -330,6 +341,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
@@ -339,16 +351,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/linearlayout6"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:weightSum="8.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/ic_baseline_logout_green" />
 
         <View
@@ -375,6 +388,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>

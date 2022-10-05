@@ -16,6 +16,8 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    String Url="https://adminapp.tech/raftarquiz/userapi/exam/categories";
+
     public HomeFragment() {
         // Required empty public constructor
     }

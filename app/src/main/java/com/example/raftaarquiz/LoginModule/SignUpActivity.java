@@ -5,24 +5,33 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.raftaarquiz.Model.RegistrationResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.raftaarquiz.R;
-import com.example.raftaarquiz.Retrofit.ApiClient;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     TextView login;
     Button SignUp;
     EditText userNumber, password, email, userName;
+    String url = "https://adminapp.tech/raftarquiz/userapi/register.php";
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +44,14 @@ public class SignUpActivity extends AppCompatActivity {
     private void initMethod() {
         login = findViewById(R.id.login);
         SignUp = findViewById(R.id.SignUp);
+        progressBar = findViewById(R.id.progressBar);
 
         userNumber = findViewById(R.id.number);
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
         userName = findViewById(R.id.userName);
-        if(getIntent().hasExtra("userEmail")){
-            email.setText(""+getIntent().getStringExtra("userEmail"));
+        if (getIntent().hasExtra("userEmail")) {
+            email.setText("" + getIntent().getStringExtra("userEmail"));
         }
     }
 
@@ -91,31 +101,53 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void sendUserData() {
-        Log.d("TAG", "sendUserData: " + userName.getText().toString() + email.getText().toString() + userNumber.getText().toString() + password.getText().toString());
+        progressBar.setVisibility(View.VISIBLE);
+        SignUp.setVisibility(View.GONE);
 
-        Call<RegistrationResponse> call = ApiClient.getInstance().getApi().
-                SendUserDetails_server(userName.getText().toString(), email.getText().toString(), userNumber.getText().toString(), password.getText().toString(), "");
-        call.enqueue(new Callback<RegistrationResponse>() {
+        RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
-                RegistrationResponse registrationResponse = response.body();
-                if (response.isSuccessful()) {
-                    Log.d("TAG", "onResponse:1 " + response.toString());
-                    if (registrationResponse.getResponse().equalsIgnoreCase("User Already exist")) {
-                        showDialog("" + registrationResponse.getResponse(), false);
-                        Log.d("TAG", "onResponse: " + response.body());
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("message").equalsIgnoreCase("Register Successfully")) {
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(SignUpActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        SignUp.setVisibility(View.VISIBLE);
+                    } else {
+                        showDialog(jsonObject.getString("message"), false);
+                        progressBar.setVisibility(View.GONE);
+                        SignUp.setVisibility(View.VISIBLE);
                     }
-                    if (registrationResponse.getResponse().equalsIgnoreCase("Registration Successfully")) {
-                        showDialog("User Register Successfully..", true);
-                        Log.d("TAG", "onResponse:33 " + response.body());
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressBar.setVisibility(View.GONE);
+                    SignUp.setVisibility(View.VISIBLE);
                 }
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                SignUp.setVisibility(View.VISIBLE);
             }
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("name", userName.getText().toString());
+                params.put("email", email.getText().toString());
+                params.put("contact_number", userNumber.getText().toString());
+                params.put("password", password.getText().toString());
+                params.put("gender", "NA");
+                return params;
+            }
+
+        };
+        queue.add(stringRequest);
     }
 
     public void showDialog(String message, Boolean isFinish) {
