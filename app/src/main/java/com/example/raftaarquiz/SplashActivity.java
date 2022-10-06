@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.raftaarquiz.LoginModule.LoginActivity;
+import com.example.raftaarquiz.Model.HelperData;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,6 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     Handler handler;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    HelperData helperData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +27,11 @@ public class SplashActivity extends AppCompatActivity {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        helperData=new HelperData(getApplicationContext());
 
         handler = new Handler();
         handler.postDelayed(() -> {
-            if (googleSignInAccount != null) {
+            if (googleSignInAccount != null||helperData.getIsLogin()) {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

@@ -13,6 +13,17 @@ public class HelperData extends Application {
     private SharedPreferences.Editor editor;
 
 
+    public HelperData(Context context) {
+        this.context = context;
+    }
+
+
+    public boolean getIsLogin() {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("IsLoggedIn", false);
+    }
+
+
 
     public void saveIsLogin(boolean flag) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);

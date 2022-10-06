@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.raftaarquiz.MainActivity;
+import com.example.raftaarquiz.Model.HelperData;
 import com.example.raftaarquiz.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     String Login_url = "https://adminapp.tech/raftarquiz/userapi/login.php";
     Button loginBtn;
     EditText email, password1;
+    HelperData helperData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
+        helperData = new HelperData(getApplicationContext());
     }
 
     private void setAction() {
@@ -113,11 +117,25 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getString("message").equalsIgnoreCase("")) {
-
+                    if (jsonObject.getString("message").equalsIgnoreCase("Login Sucessfully")) {
+                        JSONObject jsonObject1=jsonObject.getJSONObject("data");
+                        helperData.saveLogin(jsonObject1.getString("id"),jsonObject1.getString("Name"),jsonObject1.getString("Email"),jsonObject1.getString("Mobile"));
+                        progressBar.setVisibility(View.GONE);
+                        loginBtn.setVisibility(View.VISIBLE);
+                        helperData.saveIsLogin(true);
+                        Toast.makeText(LoginActivity.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressBar.setVisibility(View.GONE);
+                    loginBtn.setVisibility(View.VISIBLE);
+                    Toast.makeText(LoginActivity.this, "Somethings went wrongs..", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -126,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
                 loginBtn.setVisibility(View.VISIBLE);
+                Toast.makeText(LoginActivity.this, "Somethings went wrongs..", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -176,27 +195,39 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getString("status").equalsIgnoreCase("False")) {
-                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                        intent.putExtra("userEmail", userEmail);
-                        startActivity(intent);
-                        finish();
-                    } else if (jsonObject.getString("message").equalsIgnoreCase("Login successfully " + userName)) {
-                        String userId = jsonObject.getString("userid");
+                    if(jsonObject.getString("status").equalsIgnoreCase("success")){
+                        JSONArray jsonArray=jsonObject.getJSONArray("data");
+                        for(int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject1=jsonArray.getJSONObject(0);
+                            String id=jsonObject1.getString("id");
+                            String name=jsonObject1.getString("name");
+                            String contact_number=jsonObject1.getString("contact_number");
+                            String email=jsonObject1.getString("email");
+                            helperData.saveLogin(id,name,email,contact_number);
+                            helperData.saveIsLogin(true);}
+                        Toast.makeText(LoginActivity.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
+                    else if(jsonObject.getString("status").equalsIgnoreCase("False")){
+                        if(jsonObject.getString("message").equalsIgnoreCase("Invalid user ")){
+                            Intent intent=new Intent(LoginActivity.this,SignUpActivity.class);
+                            startActivity(intent);
+                            finish();
+                            gsc.signOut();
+                            Toast.makeText(LoginActivity.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                        }
+
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, "Somethings Went Wrong....", Toast.LENGTH_SHORT).show();
-            }
-        }) {
+        }, error -> Toast.makeText(LoginActivity.this, "Somethings Went Wrong....", Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();

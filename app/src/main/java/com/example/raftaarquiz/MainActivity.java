@@ -24,6 +24,7 @@ import com.example.raftaarquiz.BottomFragments.LeaderBoardFragment;
 import com.example.raftaarquiz.BottomFragments.MyDownloadFragment;
 import com.example.raftaarquiz.BottomFragments.MyProfileFragment;
 import com.example.raftaarquiz.LoginModule.LoginActivity;
+import com.example.raftaarquiz.Model.HelperData;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     Toolbar toolbar_main;
     boolean doubleBackToExitPressedOnce = false;
+    HelperData helperData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar_main);
 
         new Thread(this::mBottomNavigationBar).start();
+        helperData=new HelperData(getApplicationContext());
         fragmentManager = getSupportFragmentManager();
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar_main, R.string.drawer_open, R.string.drawer_close) {
@@ -124,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
         gsc.signOut();
+        helperData.Logout();
         Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
     }
 
