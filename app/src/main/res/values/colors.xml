@@ -11,4 +11,8 @@
     <color name="blue1">#004FA1</color>
     <color name="blue2">#7CB6F3</color>
     <color name="blue3">#3694F6</color>
+    <color name="Transparent">#00ffffff</color>
+    <color name="Green_Apple">#4CC417</color>
+    <color name="fontColor">#666666</color>
+    <color name="red">#F80000</color>
 </resources>

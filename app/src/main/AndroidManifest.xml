@@ -21,6 +21,27 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AllActivity.QuestionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllActivity.TestSeriesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllActivity.CurrentAffairsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllActivity.JobAlertActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllActivity.BookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllActivity.SetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllActivity.QuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
@@ -30,7 +51,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".SplashActivity"
             android:exported="true">

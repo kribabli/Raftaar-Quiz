@@ -51,7 +51,7 @@
                                 android:layout_height="60dp"
                                 android:layout_marginTop="20dp"
                                 android:layout_marginBottom="5dp"
-                                android:src="@drawable/exam" />
+                                android:src="@drawable/quiz" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -83,7 +83,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/set" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -123,7 +124,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/book" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -155,7 +157,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/job_alert" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -195,7 +198,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/current_affairs" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -227,7 +231,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp" />
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/exam" />
 
                             <TextView
                                 android:layout_width="match_parent"

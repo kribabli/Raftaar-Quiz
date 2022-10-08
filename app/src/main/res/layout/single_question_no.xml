@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:layout_margin="3dp">
+
+    <TextView
+        android:id="@+id/no_txt"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/round_with_border"
+        android:backgroundTint="@color/white"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</RelativeLayout>

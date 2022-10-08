@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.raftaarquiz.BottomFragments.HomeFragment;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar_main;
     boolean doubleBackToExitPressedOnce = false;
     HelperData helperData;
+    TextView share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +205,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String id = googleSignInAccount.getId();
             Log.d("TAG", "onCreate: " + id + "  " + userName + "  " + userEmail + "  " + photoUrl);
         }
+    }
+
+    private void shareApp(){
+        //App Share-----------------------------------------
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Raftaar Quiz");
+                    String shareMessage = "\nLet me recommend you this application\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "choose one"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
