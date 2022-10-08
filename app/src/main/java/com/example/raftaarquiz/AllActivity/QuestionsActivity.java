@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class QuestionsActivity extends AppCompatActivity {
     QuestionsList questionsList;
     TextView submitBtn;
     ArrayList<QuestionsList> list = new ArrayList<>();
+    ArrayList<QuestionsList> listOfQ = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +91,9 @@ public class QuestionsActivity extends AppCompatActivity {
                         String ans3 = jsonObject1.getString("ans3");
                         String ans4 = jsonObject1.getString("ans4");
                         questionsList = new QuestionsList(question, ans1, ans2, ans3, ans4, correct_ans);
-                        list.add(questionsList);
+                        listOfQ.add(questionsList);
                     }
+                    setAllQuestion();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -148,6 +151,8 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private void GameWon() {
         Intent intent = new Intent(QuestionsActivity.this, WonActivity.class);
+        intent.putExtra("correctCount", correctCount);
+        intent.putExtra("wrongCount", wrongCount);
         startActivity(intent);
     }
 
@@ -173,6 +178,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public void OptionAClick(View view) {
+        disableButton();
         if (questionsList.getoA().equals(questionsList.getAns())) {
             option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
 
@@ -191,6 +197,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public void OptionBClick(View view) {
+        disableButton();
         if (questionsList.getoB().equals(questionsList.getAns())) {
             option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
 
@@ -205,6 +212,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public void OptionCClick(View view) {
+        disableButton();
         if (questionsList.getoC().equals(questionsList.getAns())) {
             option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
 
@@ -219,6 +227,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public void OptionDClick(View view) {
+        disableButton();
         if (questionsList.getoD().equals(questionsList.getAns())) {
             option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
 
