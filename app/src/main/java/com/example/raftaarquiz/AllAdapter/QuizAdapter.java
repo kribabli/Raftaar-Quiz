@@ -56,7 +56,9 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
         holder.liner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, QuestionsActivity.class));
+                Intent intent=new Intent(context,QuestionsActivity.class);
+                intent.putExtra("id", list.get(position).getId());
+                context.startActivity(intent);
             }
         });
     }
