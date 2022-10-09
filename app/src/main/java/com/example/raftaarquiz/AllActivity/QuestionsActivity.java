@@ -1,12 +1,19 @@
 package com.example.raftaarquiz.AllActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,22 +28,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
     ImageView heart_img;
     TextView question_txt, option_a_txt, option_b_txt, option_c_txt, option_d_txt, score_txt;
-    ImageView image_option_a, image_option_b, image_option_c, image_option_d;
     String questionsUrl = "https://adminapp.tech/raftarquiz/api/exam/questions/";
     String id;
-    int index = 0;
-    int correctCount = 0;
-    int wrongCount = 0;
+    MutableLiveData<Integer> index = new MutableLiveData<>(0);
+    MutableLiveData<Integer> rightCount = new MutableLiveData<>(0);
+    MutableLiveData<Integer> wrongCount = new MutableLiveData<>(0);
     QuestionsList questionsList;
     TextView submitBtn;
-    ArrayList<QuestionsList> list = new ArrayList<>();
     ArrayList<QuestionsList> listOfQ = new ArrayList<>();
+    ProgressDialog progressDialog;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,47 +63,60 @@ public class QuestionsActivity extends AppCompatActivity {
         option_d_txt = findViewById(R.id.option_d_txt);
         question_txt = findViewById(R.id.question_txt);
 
-        image_option_a = findViewById(R.id.image_option_a);
-        image_option_b = findViewById(R.id.image_option_b);
-        image_option_c = findViewById(R.id.image_option_c);
-        image_option_d = findViewById(R.id.image_option_d);
-
         submitBtn = findViewById(R.id.submitBtn);
+        recyclerView = findViewById(R.id.recyclerView);
+        progressDialog = new ProgressDialog(this);
     }
 
     private void setAction() {
         id = getIntent().getStringExtra("id");
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                index.setValue(index.getValue() + 1);
+                setAllQuestion(index.getValue());
+                enableButton();
+                resetColor();
+            }
+        });
     }
 
     private void getAllQuestionsList() {
+        progressDialog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, questionsUrl + id, response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                 try {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        String type = jsonObject1.getString("type");
-                        String category = jsonObject1.getString("category");
-                        String question = jsonObject1.getString("question");
-                        String question_image = jsonObject1.getString("question_image");
-                        String ans_type = jsonObject1.getString("ans_type");
-                        String correct_ans = jsonObject1.getString("correct_ans");
+                    if (jsonArray.length() > 0) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id = jsonObject1.getString("id");
+                            String type = jsonObject1.getString("type");
+                            String category = jsonObject1.getString("category");
+                            String question = jsonObject1.getString("question");
+                            String question_image = jsonObject1.getString("question_image");
+                            String ans_type = jsonObject1.getString("ans_type");
+                            String correct_ans = jsonObject1.getString("correct_ans");
 
-                        String ans1 = jsonObject1.getString("ans1");
-                        String ans2 = jsonObject1.getString("ans2");
-                        String ans3 = jsonObject1.getString("ans3");
-                        String ans4 = jsonObject1.getString("ans4");
-                        questionsList = new QuestionsList(question, ans1, ans2, ans3, ans4, correct_ans);
-                        listOfQ.add(questionsList);
+                            String ans1 = jsonObject1.getString("ans1");
+                            String ans2 = jsonObject1.getString("ans2");
+                            String ans3 = jsonObject1.getString("ans3");
+                            String ans4 = jsonObject1.getString("ans4");
+                            questionsList = new QuestionsList(question, ans1, ans2, ans3, ans4, correct_ans);
+                            listOfQ.add(questionsList);
+                        }
+                        setAllQuestion(index.getValue());
+                        progressDialog.dismiss();
                     }
-                    setAllQuestion();
                 } catch (Exception e) {
+                    progressDialog.dismiss();
                     e.printStackTrace();
                 }
             } catch (JSONException e) {
+                progressDialog.dismiss();
                 e.printStackTrace();
             }
         }, error -> {
@@ -111,49 +130,46 @@ public class QuestionsActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public void setAllQuestion() {
-        question_txt.setText(questionsList.getQuestions());
-        option_a_txt.setText(questionsList.getoA());
-        option_b_txt.setText(questionsList.getoB());
-        option_c_txt.setText(questionsList.getoC());
-        option_d_txt.setText(questionsList.getoD());
-    }
-
-    public void Correct(TextView option_a_txt) {
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                correctCount++;
-                index++;
-                questionsList = list.get(index);
-                setAllQuestion();
+    public void setAllQuestion(Integer value) {
+        if (listOfQ.size() > 0) {
+            if (listOfQ.size() > index.getValue()) {
+                question_txt.setText(listOfQ.get(value).getQuestions());
+                option_a_txt.setText(listOfQ.get(value).getoA());
+                option_b_txt.setText(listOfQ.get(value).getoB());
+                option_c_txt.setText(listOfQ.get(value).getoC());
+                option_d_txt.setText(listOfQ.get(value).getoD());
+            } else {
+                showCustomDialog();
             }
-        });
+        } else {
+            Toast.makeText(this, "In this Quiz Section No Question Available", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void Wrong(TextView option_a_txt) {
-        option_a_txt.setBackgroundColor(getResources().getColor(R.color.red));
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                wrongCount++;
-                if (index < list.size() - 1) {
-                    index++;
-                    questionsList = list.get(index);
-                    setAllQuestion();
-                    resetColor();
-                } else {
-                    GameWon();
-                }
-            }
-        });
-    }
+    private void showCustomDialog() {
+        final Dialog dialog = new Dialog(QuestionsActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_submit_test);
 
-    private void GameWon() {
-        Intent intent = new Intent(QuestionsActivity.this, WonActivity.class);
-        intent.putExtra("correctCount", correctCount);
-        intent.putExtra("wrongCount", wrongCount);
-        startActivity(intent);
+        Button button = dialog.findViewById(R.id.play_btn);
+        Button button1 = dialog.findViewById(R.id.close);
+
+        button1.setOnClickListener(view -> finish());
+
+        button.setOnClickListener(view -> {
+            index.setValue(0);
+            rightCount.setValue(0);
+            wrongCount.setValue(0);
+            setAllQuestion(index.getValue());
+            enableButton();
+            resetColor();
+            dialog.dismiss();
+            score_txt.setText("Score : " + 0);
+        });
+
+        dialog.show();
     }
 
     public void enableButton() {
@@ -175,69 +191,87 @@ public class QuestionsActivity extends AppCompatActivity {
         option_b_txt.setBackgroundColor(getResources().getColor(R.color.white));
         option_c_txt.setBackgroundColor(getResources().getColor(R.color.white));
         option_d_txt.setBackgroundColor(getResources().getColor(R.color.white));
+
+        option_a_txt.setBackgroundResource(R.drawable.round_with_border);
+        option_b_txt.setBackgroundResource(R.drawable.round_with_border);
+        option_c_txt.setBackgroundResource(R.drawable.round_with_border);
+        option_d_txt.setBackgroundResource(R.drawable.round_with_border);
     }
 
     public void OptionAClick(View view) {
         disableButton();
-        if (questionsList.getoA().equals(questionsList.getAns())) {
+        if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
             option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
-
-            if (index < list.size() - 1) {
-//                index++;
-//                questionsList = list.get(index);
-//                setAllQuestion();
-//                resetColor();
-                Correct(option_a_txt);
-            } else {
-                GameWon();
+            rightCount.setValue(rightCount.getValue() + 1);
+            score_txt.setText("Score : " + rightCount.getValue());
+        } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoA()) {
+            wrongCount.setValue(wrongCount.getValue() + 1);
+            option_a_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
+                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
+                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
+                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
-        } else {
-            Wrong(option_a_txt);
         }
     }
 
     public void OptionBClick(View view) {
         disableButton();
-        if (questionsList.getoB().equals(questionsList.getAns())) {
+        if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
             option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
-
-            if (index < list.size() - 1) {
-                Correct(option_b_txt);
-            } else {
-                GameWon();
+            rightCount.setValue(rightCount.getValue() + 1);
+            score_txt.setText("Score : " + rightCount.getValue());
+        } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoB()) {
+            option_b_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            wrongCount.setValue(wrongCount.getValue() + 1);
+            if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
+                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
+                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
+                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
-        } else {
-            Wrong(option_b_txt);
         }
     }
 
     public void OptionCClick(View view) {
         disableButton();
-        if (questionsList.getoC().equals(questionsList.getAns())) {
+        if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
             option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
-
-            if (index < list.size() - 1) {
-                Correct(option_c_txt);
-            } else {
-                GameWon();
+            rightCount.setValue(rightCount.getValue() + 1);
+            score_txt.setText("Score : " + rightCount.getValue());
+        } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoC()) {
+            option_c_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            wrongCount.setValue(wrongCount.getValue() + 1);
+            if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
+                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
+                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
+                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
-        } else {
-            Wrong(option_c_txt);
         }
     }
 
     public void OptionDClick(View view) {
         disableButton();
-        if (questionsList.getoD().equals(questionsList.getAns())) {
+        if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
             option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
-
-            if (index < list.size() - 1) {
-                Correct(option_d_txt);
-            } else {
-                GameWon();
+            rightCount.setValue(rightCount.getValue() + 1);
+            score_txt.setText("Score : " + rightCount.getValue());
+        } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoD()) {
+            option_d_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            wrongCount.setValue(wrongCount.getValue() + 1);
+            if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
+                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
+                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
+                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
-        } else {
-            Wrong(option_d_txt);
         }
     }
+
 }
