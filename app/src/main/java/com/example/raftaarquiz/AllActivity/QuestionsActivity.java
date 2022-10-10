@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,8 @@ public class QuestionsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     RecyclerView recyclerView;
     QuestionNoAdapter questionNoAdapter;
+    TextView timer;
+    CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,12 @@ public class QuestionsActivity extends AppCompatActivity {
         initMethod();
         setAction();
         getAllQuestionsList();
+        countDownTimer();
     }
 
     private void initMethod() {
         heart_img = findViewById(R.id.heart_img);
+        timer = findViewById(R.id.timer);
         score_txt = findViewById(R.id.score_txt);
         option_a_txt = findViewById(R.id.option_a_txt);
         option_b_txt = findViewById(R.id.option_b_txt);
@@ -86,8 +93,36 @@ public class QuestionsActivity extends AppCompatActivity {
                 setAllQuestion(index.getValue());
                 enableButton();
                 resetColor();
+                countDownTimer.cancel();
+                countDownTimer();
             }
         });
+    }
+
+    private void countDownTimer() {
+        countDownTimer = new CountDownTimer(15000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                NumberFormat f = new DecimalFormat("1");
+
+                long hour = (millisUntilFinished / 3600000) % 24;
+
+                long min = (millisUntilFinished / 60000) % 60;
+
+                long sec = (millisUntilFinished / 1000) % 60;
+
+                timer.setText("Timer : " + f.format(sec));
+            }
+
+            public void onFinish() {
+                timer.setText("0");
+                this.start();
+                index.setValue(index.getValue() + 1);
+                setAllQuestion(index.getValue());
+                enableButton();
+                resetColor();
+            }
+        };
+        countDownTimer.start();
     }
 
     private void getAllQuestionsList() {
@@ -180,8 +215,10 @@ public class QuestionsActivity extends AppCompatActivity {
             resetColor();
             dialog.dismiss();
             score_txt.setText("Score : " + 0);
+            //countDownTimer cancel and start new countDownTimer
+            countDownTimer.cancel();
+            countDownTimer();
         });
-
         dialog.show();
     }
 
