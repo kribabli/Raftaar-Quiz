@@ -203,7 +203,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
         TextView button = dialog.findViewById(R.id.play_btn);
         TextView button1 = dialog.findViewById(R.id.close);
-        if(!isFinishing()) {
+        if (!isFinishing()) {
             dialog.show();// if fragment use getActivity().isFinishing() or isAdded() method
         }
 
@@ -222,9 +222,6 @@ public class QuestionsActivity extends AppCompatActivity {
             countDownTimer.cancel();
             countDownTimer();
         });
-
-
-
     }
 
     public void enableButton() {
