@@ -1,5 +1,6 @@
 package com.example.raftaarquiz.BottomFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class LeaderBoardFragment extends Fragment {
     String leaderBoardUrl = "https://adminapp.tech/raftarquiz/api/users/leaderboard";
     ArrayList<LeaderBoard> listItems = new ArrayList<>();
     RecyclerView recyclerView;
+    ProgressDialog progressDialog;
 
     public LeaderBoardFragment() {
         // Required empty public constructor
@@ -70,6 +72,9 @@ public class LeaderBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setMessage("Loading..");
         return root;
     }
 
@@ -77,6 +82,7 @@ public class LeaderBoardFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, leaderBoardUrl, response -> {
             try {
+                progressDialog.show();
                 JSONArray jsonArray = new JSONArray(response);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -94,7 +100,9 @@ public class LeaderBoardFragment extends Fragment {
                 recyclerView.setAdapter(leaderBoardAdapter);
                 recyclerView.setHasFixedSize(true);
                 leaderBoardAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             } catch (JSONException e) {
+                progressDialog.dismiss();
                 e.printStackTrace();
             }
         }, error -> {
