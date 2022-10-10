@@ -115,8 +115,7 @@ public class LeaderBoardFragment extends Fragment {
         };
         queue.add(stringRequest);
     }
-
-
+    
     //LeaderBoardAdapter
     public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder> {
         public List<LeaderBoard> list;
