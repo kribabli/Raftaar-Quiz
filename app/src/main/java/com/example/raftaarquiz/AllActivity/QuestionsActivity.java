@@ -1,17 +1,23 @@
 package com.example.raftaarquiz.AllActivity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
@@ -43,6 +50,7 @@ public class QuestionsActivity extends AppCompatActivity {
     ArrayList<QuestionsList> listOfQ = new ArrayList<>();
     ProgressDialog progressDialog;
     RecyclerView recyclerView;
+    QuestionNoAdapter questionNoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +116,11 @@ public class QuestionsActivity extends AppCompatActivity {
                             questionsList = new QuestionsList(question, ans1, ans2, ans3, ans4, correct_ans);
                             listOfQ.add(questionsList);
                         }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                        questionNoAdapter = new QuestionNoAdapter(listOfQ);
+                        recyclerView.setAdapter(questionNoAdapter);
+                        questionNoAdapter.notifyDataSetChanged();
+
                         setAllQuestion(index.getValue());
                         progressDialog.dismiss();
                     }
@@ -153,8 +166,8 @@ public class QuestionsActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_submit_test);
 
-        Button button = dialog.findViewById(R.id.play_btn);
-        Button button1 = dialog.findViewById(R.id.close);
+        TextView button = dialog.findViewById(R.id.play_btn);
+        TextView button1 = dialog.findViewById(R.id.close);
 
         button1.setOnClickListener(view -> finish());
 
@@ -274,4 +287,46 @@ public class QuestionsActivity extends AppCompatActivity {
         }
     }
 
+
+    //Adapter for No Of Question
+    public class QuestionNoAdapter extends RecyclerView.Adapter<QuestionNoAdapter.ViewHolder> {
+        public List<QuestionsList> list;
+        public Context context;
+
+        public QuestionNoAdapter(List<QuestionsList> list) {
+            this.list = list;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_question_no, parent, false);
+            context = parent.getContext();
+            return new ViewHolder(view);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+            holder.setIsRecyclable(false);
+            holder.noOfQuestion.setText("" + (position + 1));
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            TextView noOfQuestion;
+            private View mView;
+            LinearLayout liner;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                mView = itemView;
+                noOfQuestion = itemView.findViewById(R.id.no_txt);
+                liner = itemView.findViewById(R.id.liner);
+            }
+        }
+    }
 }
