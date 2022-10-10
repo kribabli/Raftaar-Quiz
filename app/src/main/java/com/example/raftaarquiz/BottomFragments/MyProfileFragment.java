@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.raftaarquiz.Common.HelperData;
 import com.example.raftaarquiz.LoginModule.LoginActivity;
 import com.example.raftaarquiz.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -28,6 +29,7 @@ public class MyProfileFragment extends Fragment {
     LinearLayout linearlayout7;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    HelperData helperData;
 
     public MyProfileFragment() {
         // Required empty public constructor
@@ -83,12 +85,13 @@ public class MyProfileFragment extends Fragment {
     }
 
     private void userLogout() {
+        helperData = new HelperData(getContext());
         Intent intent = new Intent(getContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         gsc.signOut();
+        helperData.Logout();
         Toast.makeText(getContext(), "Logout Successfully", Toast.LENGTH_SHORT).show();
         getActivity().finish();
     }
-
 }
