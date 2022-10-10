@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.raftaarquiz.Common.HelperData;
 import com.example.raftaarquiz.LoginModule.LoginActivity;
 import com.example.raftaarquiz.R;
@@ -20,6 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -30,29 +34,13 @@ public class MyProfileFragment extends Fragment {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     HelperData helperData;
+    TextView userName;
+    CircleImageView profilePic;
 
-    public MyProfileFragment() {
-        // Required empty public constructor
-    }
 
-    public static MyProfileFragment newInstance(String param1, String param2) {
-        MyProfileFragment fragment = new MyProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        googleSignIn();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,12 +49,12 @@ public class MyProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_profile, container, false);
         linearlayout7 = root.findViewById(R.id.linearlayout7);
 
-        linearlayout7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userLogout();
-            }
-        });
+        userName = root.findViewById(R.id.userName);
+        profilePic = root.findViewById(R.id.profilePic);
+        helperData=new HelperData(getContext());
+        linearlayout7.setOnClickListener(view -> userLogout());
+        userName.setText(""+helperData.getUserName());
+        googleSignIn();
         return root;
 
     }
@@ -80,6 +68,9 @@ public class MyProfileFragment extends Fragment {
             String userEmail = googleSignInAccount.getEmail();
             Uri photoUrl = googleSignInAccount.getPhotoUrl();
             String id = googleSignInAccount.getId();
+            Glide.with(getContext())
+                    .load(photoUrl)
+                    .into(profilePic);
             Log.d("TAG", "onCreate: " + id + "  " + userName + "  " + userEmail + "  " + photoUrl);
         }
     }
