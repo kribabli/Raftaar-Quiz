@@ -62,18 +62,14 @@ public class LeaderBoardFragment extends Fragment {
     private void getAllLeaderBoardData() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, leaderBoardUrl, response -> {
+            Log.d("Amit","Value "+response.toString());
             try {
-                JSONObject jsonObject = new JSONObject(response);
-                JSONArray jsonArray = new JSONArray(response);
-                Log.d("TAG", "getAllLeaderBoardData1: " + jsonArray);
-                try {
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                JSONArray jsonArray=new JSONArray(response);
+                Log.d("Amit","Value12 "+jsonArray);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }, error -> {
         }) {
             @Override
