@@ -11,20 +11,14 @@ import java.util.ArrayList;
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "sajilo.db";
-
-
     public static final String TABLE_FAVOURITE = "FAVOURITE";
-
-
     public static final String FAVOURITE_ID = "id";
     public static final String FAVOURITE_NAME = "Favourite_book_Name";
     public static final String FAVOURITE_IMAGE = "Favourite_image";
 
-
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -33,7 +27,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + FAVOURITE_NAME + " TEXT,"
                 + FAVOURITE_IMAGE + " TEXT"
                 + ")";
-
         db.execSQL(CREATE_FAVOURITE_TABLE);
     }
 
@@ -41,7 +34,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITE);
         onCreate(db);
-
     }
 
     public void addFavourite(String TableName, ContentValues contentvalues, String s1) {
@@ -70,7 +62,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-
     public ArrayList<String> getFavouriteId() {
         ArrayList<String> movieList = new ArrayList<>();
         String selectQuery = "SELECT *  FROM "
@@ -86,5 +77,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return movieList;
     }
-
 }

@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,9 +30,8 @@ public class BookActivity extends AppCompatActivity {
     ProgressBar progressBar;
     LinearLayout lyt_not_found;
     ArrayList<BookListData> mListItem;
-    String BookListUrl="https://adminapp.tech/raftarquiz/userapi/book.php";
+    String BookListUrl = "https://adminapp.tech/raftarquiz/userapi/book.php";
     BookListAdapter adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +41,9 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void setInit() {
-        recyclerView=findViewById(R.id.recyclerView);
-        progressBar=findViewById(R.id.progressBar);
-        lyt_not_found=findViewById(R.id.lyt_not_found);
+        recyclerView = findViewById(R.id.recyclerView);
+        progressBar = findViewById(R.id.progressBar);
+        lyt_not_found = findViewById(R.id.lyt_not_found);
         mListItem = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,31 +54,28 @@ public class BookActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(BookActivity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BookListUrl, response -> {
-            Log.d("Amit","Value "+response.toString());
             try {
-                if(response.toString()!=null){
-                    JSONObject jsonObject=new JSONObject(response.toString());
-                    JSONArray jsonArray=jsonObject.getJSONArray("message");
-                    if(jsonArray.length()>0){
-                        for(int i=0;i<jsonArray.length();i++){
-                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                            String id=jsonObject1.getString("id");
-                            String title=jsonObject1.getString("title");
-                            String description=jsonObject1.getString("description");
-                            String image=jsonObject1.getString("image");
-                            BookListData bookListData=new BookListData(id,title,description,image);
+                if (response != null) {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("message");
+                    if (jsonArray.length() > 0) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id = jsonObject1.getString("id");
+                            String title = jsonObject1.getString("title");
+                            String description = jsonObject1.getString("description");
+                            String authorname = jsonObject1.getString("authorname");
+                            String image = jsonObject1.getString("image");
+                            BookListData bookListData = new BookListData(id, title, description, authorname, image);
                             mListItem.add(bookListData);
                         }
-                       adapter=new BookListAdapter(mListItem,getApplicationContext());
+                        adapter = new BookListAdapter(mListItem, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                         progressBar.setVisibility(View.GONE);
-                    }
-                    else{
+                    } else {
                         lyt_not_found.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                     }
-
-
                 }
 
             } catch (JSONException e) {
@@ -88,7 +83,6 @@ public class BookActivity extends AppCompatActivity {
                 lyt_not_found.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
             }
-
         }, error -> {
             lyt_not_found.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
@@ -100,6 +94,5 @@ public class BookActivity extends AppCompatActivity {
             }
         };
         queue.add(stringRequest);
-
     }
 }

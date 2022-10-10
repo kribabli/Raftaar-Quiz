@@ -1,16 +1,17 @@
 package com.example.raftaarquiz.Model;
 
 public class BookListData {
-
     String id;
     String title;
     String description;
+    String authorname;
     String image;
 
-    public BookListData(String id, String title, String description, String image) {
+    public BookListData(String id, String title, String description, String authorname, String image) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.authorname = authorname;
         this.image = image;
     }
 
@@ -36,6 +37,14 @@ public class BookListData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAuthorname() {
+        return authorname;
+    }
+
+    public void setAuthorname(String authorname) {
+        this.authorname = authorname;
     }
 
     public String getImage() {
