@@ -7,6 +7,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -46,13 +48,20 @@ public class QuizActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler);
         swiper = findViewById(R.id.swiper);
         backPress = findViewById(R.id.backPress);
+        Animation animSlideDown = AnimationUtils.loadAnimation(this,R.anim.slide_down);
+        recyclerView.startAnimation(animSlideDown);
     }
 
     private void setAction() {
         swiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                swiper.setRefreshing(false);
                 getAllQuizList();
+                Animation animSlideDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down);
+                recyclerView.startAnimation(animSlideDown);
+
+
             }
         });
 

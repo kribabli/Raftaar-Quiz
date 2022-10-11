@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -95,7 +96,7 @@ public class LeaderBoardFragment extends Fragment {
                     LeaderBoard leaderBoard = new LeaderBoard(id, name, image_url, score, rank);
                     listItems.add(leaderBoard);
                 }
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, LinearLayoutManager.HORIZONTAL, false));
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
                 leaderBoardAdapter = new LeaderBoardAdapter(listItems);
                 recyclerView.setAdapter(leaderBoardAdapter);
                 recyclerView.setHasFixedSize(true);

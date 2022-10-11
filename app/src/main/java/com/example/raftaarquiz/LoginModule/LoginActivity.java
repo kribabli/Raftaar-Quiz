@@ -194,6 +194,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (jsonObject.getString("status").equalsIgnoreCase("False")) {
                     if (jsonObject.getString("message").equalsIgnoreCase("Invalid user ")) {
                         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                        intent.putExtra("userEmail",userEmail);
+                        intent.putExtra("userName",userName);
                         startActivity(intent);
                         finish();
                         gsc.signOut();
