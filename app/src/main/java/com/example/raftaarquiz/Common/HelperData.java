@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class HelperData extends Application {
-    private static String SHARED_PREF_NAME1 = "Sajilo";
+    private static String SHARED_PREF_NAME1 = "Raftaar";
     private SharedPreferences sharedPreferences;
     Context context;
     private SharedPreferences.Editor editor;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "sajilo.db";
+    private static final String DATABASE_NAME = "raftaar.db";
     public static final String TABLE_FAVOURITE = "FAVOURITE";
     public static final String FAVOURITE_ID = "id";
     public static final String FAVOURITE_NAME = "Favourite_book_Name";
