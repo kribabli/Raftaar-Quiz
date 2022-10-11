@@ -62,7 +62,6 @@ public class HomeFragment extends Fragment {
         testSeries_liner = root.findViewById(R.id.testSeries_liner);
         swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
 
-
         Animation animSlideDown = AnimationUtils.loadAnimation(getContext(),R.anim.slide_down);
         quiz_liner.startAnimation(animSlideDown);
 
@@ -84,25 +83,20 @@ public class HomeFragment extends Fragment {
 
         testSeries_liner.setOnClickListener(v -> startActivity(new Intent(getContext(), TestSeriesActivity.class)));
 
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(false);
                 Animation animSlideDown = AnimationUtils.loadAnimation(getContext(),R.anim.slide_down);
-                quiz_liner.startAnimation(animSlideDown);
 
+                quiz_liner.startAnimation(animSlideDown);
                 set_liner.startAnimation(animSlideDown);
                 book_liner.startAnimation(animSlideDown);
                 job_alert_liner.startAnimation(animSlideDown);
                 currentAffairs_liner.startAnimation(animSlideDown);
                 testSeries_liner.startAnimation(animSlideDown);
-
             }
         });
-
-
-
 
         return root;
     }

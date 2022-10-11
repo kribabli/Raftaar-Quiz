@@ -60,8 +60,6 @@ public class QuizActivity extends AppCompatActivity {
                 getAllQuizList();
                 Animation animSlideDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down);
                 recyclerView.startAnimation(animSlideDown);
-
-
             }
         });
 
