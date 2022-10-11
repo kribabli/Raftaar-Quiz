@@ -29,7 +29,7 @@
             android:layout_height="90dp"
             android:layout_margin="7dp"
             android:layout_weight="3"
-            android:background="@drawable/border_radius"
+            android:background="@drawable/book_bg"
             android:scaleType="fitXY"
             android:src="@drawable/book" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="@string/app_name"
+                android:text="Book Title"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
-                android:text="Book Description"
+                android:text="Author Name"
                 android:textSize="15dp"
                 android:textStyle="normal" />
 
