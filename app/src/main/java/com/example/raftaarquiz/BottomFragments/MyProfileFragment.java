@@ -26,7 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment {
-    LinearLayout linearlayout7;
+    LinearLayout linearlayout7, linearlayout6;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     HelperData helperData;
@@ -39,13 +39,15 @@ public class MyProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_profile, container, false);
         linearlayout7 = root.findViewById(R.id.linearlayout7);
+        linearlayout6 = root.findViewById(R.id.linearlayout6);
 
         userName = root.findViewById(R.id.userName);
         profilePic = root.findViewById(R.id.profilePic);
-        helperData=new HelperData(getContext());
+        helperData = new HelperData(getContext());
         linearlayout7.setOnClickListener(view -> userLogout());
-        userName.setText(""+helperData.getUserName());
+        userName.setText("" + helperData.getUserName());
         googleSignIn();
+        referAndEarn();
         return root;
 
     }
@@ -64,6 +66,32 @@ public class MyProfileFragment extends Fragment {
                     .into(profilePic);
             Log.d("TAG", "onCreate: " + id + "  " + userName + "  " + userEmail + "  " + photoUrl);
         }
+    }
+
+    private void referAndEarn() {
+        helperData = new HelperData(getContext());
+        //ReferAndEarn-----------------------------------------
+        linearlayout6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Raftaar Quiz");
+                    String shareMessage = "\nLet me recommend you this application\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + androidx.multidex.BuildConfig.APPLICATION_ID + "";
+                    Log.d("TAG", "onClick: " + helperData.getReferalCode());
+                    Log.d("TAG", "onClick:22 " + helperData.getUserName());
+                    shareMessage = shareMessage + "\n1.Use my invite code " + helperData.getReferalCode() + "\n";
+                    shareMessage = shareMessage + "\nLet's play!";
+
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "choose one"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void userLogout() {

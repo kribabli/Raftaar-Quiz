@@ -26,13 +26,14 @@ public class HelperData extends Application {
         editor.apply();
     }
 
-    public void saveLogin(String user_id, String user_name, String email, String mobile) {
+    public void saveLogin(String user_id, String user_name, String email, String mobile, String refferal_code) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putString("user_id", user_id);
         editor.putString("user_name", user_name);
         editor.putString("email", email);
         editor.putString("mobile", mobile);
+        editor.putString("refferal_code", refferal_code);
         editor.apply();
     }
 
@@ -54,6 +55,11 @@ public class HelperData extends Application {
     public String getMobile() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
         return sharedPreferences.getString("mobile", "");
+    }
+
+    public String getReferalCode() {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
+        return sharedPreferences.getString("refferal_code", "");
     }
 
     public void Logout() {

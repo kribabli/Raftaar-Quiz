@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("message").equalsIgnoreCase("Login Sucessfully")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-                    helperData.saveLogin(jsonObject1.getString("id"), jsonObject1.getString("Name"), jsonObject1.getString("Email"), jsonObject1.getString("Mobile"));
+                    helperData.saveLogin(jsonObject1.getString("id"), jsonObject1.getString("Name"), jsonObject1.getString("Email"), jsonObject1.getString("Mobile"), jsonObject1.getString("refferal_code"));
                     progressBar.setVisibility(View.GONE);
                     loginBtn.setVisibility(View.VISIBLE);
                     helperData.saveIsLogin(true);
@@ -182,7 +183,8 @@ public class LoginActivity extends AppCompatActivity {
                         String name = jsonObject1.getString("name");
                         String contact_number = jsonObject1.getString("contact_number");
                         String email = jsonObject1.getString("email");
-                        helperData.saveLogin(id, name, email, contact_number);
+                        String refferal_code = jsonObject1.getString("refferal_code");
+                        helperData.saveLogin(id, name, email, contact_number, refferal_code);
                         helperData.saveIsLogin(true);
                     }
                     progressBar.setVisibility(View.GONE);
@@ -194,8 +196,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (jsonObject.getString("status").equalsIgnoreCase("False")) {
                     if (jsonObject.getString("message").equalsIgnoreCase("Invalid user ")) {
                         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                        intent.putExtra("userEmail",userEmail);
-                        intent.putExtra("userName",userName);
+                        intent.putExtra("userEmail", userEmail);
+                        intent.putExtra("userName", userName);
                         startActivity(intent);
                         finish();
                         gsc.signOut();
