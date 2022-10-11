@@ -26,21 +26,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     LinearLayout linearlayout7;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     HelperData helperData;
     TextView userName;
     CircleImageView profilePic;
-
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

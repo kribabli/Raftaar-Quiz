@@ -3,257 +3,282 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BottomFragments.HomeFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never">
 
-        <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:fillViewport="true"
+            android:overScrollMode="never">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_bg_white">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:background="@drawable/border_bg_white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/quiz_liner"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_radius"
-                            android:backgroundTint="@color/blue"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp"
-                                android:src="@drawable/quiz" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/quiz_liner"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="20dp"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_radius"
+                                android:backgroundTint="@color/blue"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:foreground="?selectableItemBackground"
                                 android:gravity="center"
-                                android:text="Quiz"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:id="@+id/whatsapp_img"
+                                    android:layout_width="100dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/quiz" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:gravity="center"
+                                    android:text="Quiz"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/set_liner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_radius"
+                                android:backgroundTint="@color/blue"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:foreground="?selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:layout_width="100dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/sets" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:gravity="center"
+                                    android:text="Set"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/set_liner"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_radius"
-                            android:backgroundTint="@color/blue"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp"
-                                android:src="@drawable/set" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/book_liner"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="20dp"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_radius"
+                                android:backgroundTint="@color/blue"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:foreground="?selectableItemBackground"
                                 android:gravity="center"
-                                android:text="Set"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:layout_width="100dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/books_lottie" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:gravity="center"
+                                    android:text="Book"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/job_alert_liner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_radius"
+                                android:backgroundTint="@color/blue"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:foreground="?selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:layout_width="100dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/alert" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:gravity="center"
+                                    android:text="Job Alert"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:id="@+id/currentAffairs_liner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_radius"
+                                android:backgroundTint="@color/blue"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:foreground="?selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:layout_width="100dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/current_affairs" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:gravity="center"
+                                    android:text="Current Affairs"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/testSeries_liner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="15dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border_radius"
+                                android:backgroundTint="@color/blue"
+                                android:clickable="true"
+                                android:elevation="4dp"
+                                android:foreground="?selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:layout_width="100dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/test_lottie" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="20dp"
+                                    android:gravity="center"
+                                    android:text="Test Series"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                </RelativeLayout>
 
-                        <LinearLayout
-                            android:id="@+id/book_liner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_radius"
-                            android:backgroundTint="@color/blue"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center"
-                            android:orientation="vertical">
+            </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp"
-                                android:src="@drawable/book" />
+        </androidx.core.widget.NestedScrollView>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="20dp"
-                                android:gravity="center"
-                                android:text="Book"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
 
-                        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                        <LinearLayout
-                            android:id="@+id/job_alert_liner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_radius"
-                            android:backgroundTint="@color/blue"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center"
-                            android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp"
-                                android:src="@drawable/job_alert" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="20dp"
-                                android:gravity="center"
-                                android:text="Job Alert"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:id="@+id/currentAffairs_liner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_radius"
-                            android:backgroundTint="@color/blue"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp"
-                                android:src="@drawable/current_affairs" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="20dp"
-                                android:gravity="center"
-                                android:text="Current Affairs"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/testSeries_liner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_radius"
-                            android:backgroundTint="@color/blue"
-                            android:clickable="true"
-                            android:elevation="4dp"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="5dp"
-                                android:src="@drawable/exam" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="20dp"
-                                android:gravity="center"
-                                android:text="Test Series"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

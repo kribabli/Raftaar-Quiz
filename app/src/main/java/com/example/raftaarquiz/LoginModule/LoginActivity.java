@@ -159,6 +159,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void googleSignInVerification() {
+        progressBar.setVisibility(View.VISIBLE);
+        loginBtn.setVisibility(View.GONE);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -183,6 +185,8 @@ public class LoginActivity extends AppCompatActivity {
                         helperData.saveLogin(id, name, email, contact_number);
                         helperData.saveIsLogin(true);
                     }
+                    progressBar.setVisibility(View.GONE);
+                    loginBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -193,11 +197,15 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         gsc.signOut();
+                        progressBar.setVisibility(View.GONE);
+                        loginBtn.setVisibility(View.VISIBLE);
                         Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
+                loginBtn.setVisibility(View.VISIBLE);
             }
         }, error -> Toast.makeText(LoginActivity.this, "Somethings Went Wrong....", Toast.LENGTH_SHORT).show()) {
             @Override

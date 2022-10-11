@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.raftaarquiz.AllActivity.BookActivity;
 import com.example.raftaarquiz.AllActivity.CurrentAffairsActivity;
@@ -23,6 +26,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     LinearLayout quiz_liner, set_liner, book_liner, job_alert_liner, currentAffairs_liner, testSeries_liner;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -56,6 +60,17 @@ public class HomeFragment extends Fragment {
         job_alert_liner = root.findViewById(R.id.job_alert_liner);
         currentAffairs_liner = root.findViewById(R.id.currentAffairs_liner);
         testSeries_liner = root.findViewById(R.id.testSeries_liner);
+        swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
+
+
+        Animation animSlideDown = AnimationUtils.loadAnimation(getContext(),R.anim.slide_down);
+        quiz_liner.startAnimation(animSlideDown);
+
+        set_liner.startAnimation(animSlideDown);
+        book_liner.startAnimation(animSlideDown);
+        job_alert_liner.startAnimation(animSlideDown);
+        currentAffairs_liner.startAnimation(animSlideDown);
+        testSeries_liner.startAnimation(animSlideDown);
 
         quiz_liner.setOnClickListener(v -> startActivity(new Intent(getContext(), QuizActivity.class)));
 
@@ -68,6 +83,26 @@ public class HomeFragment extends Fragment {
         currentAffairs_liner.setOnClickListener(v -> startActivity(new Intent(getContext(), CurrentAffairsActivity.class)));
 
         testSeries_liner.setOnClickListener(v -> startActivity(new Intent(getContext(), TestSeriesActivity.class)));
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                Animation animSlideDown = AnimationUtils.loadAnimation(getContext(),R.anim.slide_down);
+                quiz_liner.startAnimation(animSlideDown);
+
+                set_liner.startAnimation(animSlideDown);
+                book_liner.startAnimation(animSlideDown);
+                job_alert_liner.startAnimation(animSlideDown);
+                currentAffairs_liner.startAnimation(animSlideDown);
+                testSeries_liner.startAnimation(animSlideDown);
+
+            }
+        });
+
+
+
 
         return root;
     }
