@@ -51,15 +51,11 @@ public class MyProfileFragment extends Fragment {
         googleSignIn();
         referAndEarn();
 
-        linearlayout1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EditProfileActivity.class);
-                startActivity(intent);
-            }
+        linearlayout1.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), EditProfileActivity.class);
+            startActivity(intent);
         });
         return root;
-
     }
 
     private void googleSignIn() {
@@ -81,25 +77,20 @@ public class MyProfileFragment extends Fragment {
     private void referAndEarn() {
         helperData = new HelperData(getContext());
         //ReferAndEarn-----------------------------------------
-        linearlayout6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Raftaar Quiz");
-                    String shareMessage = "\nLet me recommend you this application\n\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + androidx.multidex.BuildConfig.APPLICATION_ID + "";
-                    Log.d("TAG", "onClick: " + helperData.getReferalCode());
-                    Log.d("TAG", "onClick:22 " + helperData.getUserName());
-                    shareMessage = shareMessage + "\n1.Use my invite code " + helperData.getReferalCode() + "\n";
-                    shareMessage = shareMessage + "\nLet's play!";
+        linearlayout6.setOnClickListener(v -> {
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Raftaar Quiz");
+                String shareMessage = "\nLet me recommend you this application\n\n";
+                shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + androidx.multidex.BuildConfig.APPLICATION_ID + "";
+                shareMessage = shareMessage + "\n1.Use my invite code " + helperData.getReferalCode() + "\n";
+                shareMessage = shareMessage + "\nLet's play!";
 
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "choose one"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
