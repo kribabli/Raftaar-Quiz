@@ -1,4 +1,4 @@
-package com.example.raftaarquiz;
+package com.example.raftaarquiz.AllActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.example.raftaarquiz.R;
 
 public class AboutUsActivity extends AppCompatActivity {
     private WebView webView;

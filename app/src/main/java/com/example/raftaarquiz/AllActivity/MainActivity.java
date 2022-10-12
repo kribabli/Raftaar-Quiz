@@ -1,4 +1,4 @@
-package com.example.raftaarquiz;
+package com.example.raftaarquiz.AllActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,8 +24,10 @@ import com.example.raftaarquiz.BottomFragments.HomeFragment;
 import com.example.raftaarquiz.BottomFragments.LeaderBoardFragment;
 import com.example.raftaarquiz.BottomFragments.MyDownloadFragment;
 import com.example.raftaarquiz.BottomFragments.MyProfileFragment;
+import com.example.raftaarquiz.BuildConfig;
 import com.example.raftaarquiz.LoginModule.LoginActivity;
 import com.example.raftaarquiz.Common.HelperData;
+import com.example.raftaarquiz.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar_main);
 
         new Thread(this::mBottomNavigationBar).start();
-        helperData=new HelperData(getApplicationContext());
+        helperData = new HelperData(getApplicationContext());
         fragmentManager = getSupportFragmentManager();
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar_main, R.string.drawer_open, R.string.drawer_close) {
@@ -207,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void shareApp(){
+    private void shareApp() {
         //App Share-----------------------------------------
         share.setOnClickListener(new View.OnClickListener() {
             @Override

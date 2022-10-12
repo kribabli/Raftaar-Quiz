@@ -48,7 +48,7 @@
             android:name=".AllActivity.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".AllActivity.AboutUsActivity"
             android:exported="false" />
         <activity
             android:name=".LoginModule.LoginActivity"
@@ -58,7 +58,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".AllActivity.SplashActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -78,7 +78,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".AllActivity.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
