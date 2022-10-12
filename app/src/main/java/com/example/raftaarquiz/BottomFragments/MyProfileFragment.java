@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.raftaarquiz.AllActivity.EditProfileActivity;
 import com.example.raftaarquiz.Common.HelperData;
 import com.example.raftaarquiz.LoginModule.LoginActivity;
 import com.example.raftaarquiz.R;
@@ -26,7 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment {
-    LinearLayout linearlayout7, linearlayout6;
+    LinearLayout linearlayout7, linearlayout6, linearlayout1;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     HelperData helperData;
@@ -40,6 +41,7 @@ public class MyProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_profile, container, false);
         linearlayout7 = root.findViewById(R.id.linearlayout7);
         linearlayout6 = root.findViewById(R.id.linearlayout6);
+        linearlayout1 = root.findViewById(R.id.linearlayout1);
 
         userName = root.findViewById(R.id.userName);
         profilePic = root.findViewById(R.id.profilePic);
@@ -48,6 +50,14 @@ public class MyProfileFragment extends Fragment {
         userName.setText("" + helperData.getUserName());
         googleSignIn();
         referAndEarn();
+
+        linearlayout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         return root;
 
     }
