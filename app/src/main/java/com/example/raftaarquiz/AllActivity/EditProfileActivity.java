@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,18 +38,15 @@ public class EditProfileActivity extends AppCompatActivity {
     CircleImageView profilePic;
     EditText username_edt;
     EditText mobile_no;
-    EditText email_edt,password;
+    EditText email_edt, password;
     Button saveBtn;
-    RadioButton rb_male,rb_female;
+    RadioButton rb_male, rb_female;
     HelperData helperData;
     ProgressBar progress_circular;
-    String code="";
-    String profileImagePath="";
+    String code = "";
+    String profileImagePath = "";
     Bitmap bitmap;
-    String gender="NA";
-
-
-
+    String gender = "NA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,45 +54,37 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         setHooks();
         handleActionMethod();
-
     }
 
     private void handleActionMethod() {
         profilePic.setOnClickListener(view -> {
             code = "profileImage";
             ImagePicker.with(EditProfileActivity.this)
-                    .crop(15f,9f)
+                    .crop(15f, 9f)
                     .start();
-
         });
 
         saveBtn.setOnClickListener(view -> {
             validationFromBox();
-
         });
-
-
-
     }
 
     private void setHooks() {
-        helperData=new HelperData(getApplicationContext());
-        profilePic=findViewById(R.id.profilePic);
-        username_edt=findViewById(R.id.username_edt);
-        mobile_no=findViewById(R.id.mobile_no);
-        email_edt=findViewById(R.id.email_edt);
-        saveBtn=findViewById(R.id.saveBtn);
-        rb_male=findViewById(R.id.rb_male);
-        rb_female=findViewById(R.id.rb_female);
-        password=findViewById(R.id.password);
-        progress_circular=findViewById(R.id.progress_circular);
+        helperData = new HelperData(getApplicationContext());
+        profilePic = findViewById(R.id.profilePic);
+        username_edt = findViewById(R.id.username_edt);
+        mobile_no = findViewById(R.id.mobile_no);
+        email_edt = findViewById(R.id.email_edt);
+        saveBtn = findViewById(R.id.saveBtn);
+        rb_male = findViewById(R.id.rb_male);
+        rb_female = findViewById(R.id.rb_female);
+        password = findViewById(R.id.password);
+        progress_circular = findViewById(R.id.progress_circular);
 
-        username_edt.setText(""+helperData.getUserName());
-        mobile_no.setText(""+helperData.getMobile());
-        email_edt.setText(""+helperData.getUserEmail());
-
+        username_edt.setText("" + helperData.getUserName());
+        mobile_no.setText("" + helperData.getMobile());
+        email_edt.setText("" + helperData.getUserEmail());
     }
-
 
     private boolean validationFromBox() {
         boolean isValid = true;
@@ -104,35 +92,25 @@ public class EditProfileActivity extends AppCompatActivity {
             username_edt.setError("Please enter your username");
             username_edt.requestFocus();
             isValid = false;
-
-        } else if (mobile_no.toString().trim().length() == 0 && mobile_no.toString().trim().length()==10) {
+        } else if (mobile_no.toString().trim().length() == 0 && mobile_no.toString().trim().length() == 10) {
             mobile_no.setError("Please enter your mobile");
             mobile_no.requestFocus();
             isValid = false;
-
         } else if (email_edt.toString().trim().length() == 0) {
             email_edt.setError("Please enter your email");
             email_edt.requestFocus();
             isValid = false;
-        }
-
-        else if (password.toString().trim().length() == 0) {
+        } else if (password.toString().trim().length() == 0) {
             password.setError("Please enter valid password");
             password.requestFocus();
             isValid = false;
-        }
-
-        else if (bitmap == null) {
+        } else if (bitmap == null) {
             Toast.makeText(this, "Please select your Profile Image", Toast.LENGTH_SHORT).show();
             isValid = false;
+        } else {
+            updateProfileData();
         }
-        else{
-           updateProfileData();
-        }
-
         return isValid;
-
-
     }
 
     private void updateProfileData() {
@@ -151,44 +129,33 @@ public class EditProfileActivity extends AppCompatActivity {
         okhttp3.RequestBody requestBody5 = okhttp3.RequestBody.create(okhttp3.MediaType.parse("*/*"), myFile1);
         fileToUpload1 = MultipartBody.Part.createFormData("image_url", myFile1.getName(), requestBody5);
 
-        Call<ProfileResponse> call= ApiClient.getInstance().getApi().UpdateProfileData(requestBody,requestBody1,requestBody2,requestBody3,requestBody6,fileToUpload1,requestBody4);
-
+        Call<ProfileResponse> call = ApiClient.getInstance().getApi().UpdateProfileData(requestBody, requestBody1, requestBody2, requestBody3, requestBody6, fileToUpload1, requestBody4);
 
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                ProfileResponse profileResponse=response.body();
-                if(response.isSuccessful()){
+                ProfileResponse profileResponse = response.body();
+                if (response.isSuccessful()) {
                     String categoryData = new Gson().toJson(response.body());
-                    Log.d("Amit","Value "+categoryData);
-                    Log.d("Amit","Value "+response);
-                    if(profileResponse.getStatus().equalsIgnoreCase("false")){
+                    if (profileResponse.getStatus().equalsIgnoreCase("false")) {
                         progress_circular.setVisibility(View.GONE);
                         saveBtn.setVisibility(View.VISIBLE);
                         Toast.makeText(EditProfileActivity.this, "Somethings went wrong..", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(profileResponse.getStatus().equalsIgnoreCase("true")){
+                    } else if (profileResponse.getStatus().equalsIgnoreCase("true")) {
                         progress_circular.setVisibility(View.GONE);
                         saveBtn.setVisibility(View.VISIBLE);
-                        Toast.makeText(EditProfileActivity.this, ""+profileResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "" + profileResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-
-
             }
 
             @Override
             public void onFailure(Call<ProfileResponse> call, Throwable t) {
                 progress_circular.setVisibility(View.GONE);
                 saveBtn.setVisibility(View.VISIBLE);
-                Log.d("Amit","Value "+t);
             }
         });
-
-
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -203,10 +170,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
         }
-
     }
 }

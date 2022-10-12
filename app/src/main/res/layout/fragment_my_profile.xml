@@ -113,6 +113,7 @@
         android:id="@+id/linearlayout2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:visibility="gone"
         android:layout_below="@id/linearlayout1"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"

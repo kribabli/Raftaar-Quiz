@@ -67,6 +67,7 @@ public class MyProfileFragment extends Fragment {
             String userEmail = googleSignInAccount.getEmail();
             Uri photoUrl = googleSignInAccount.getPhotoUrl();
             String id = googleSignInAccount.getId();
+
             Glide.with(getContext())
                     .load(photoUrl)
                     .into(profilePic);

@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.raftaarquiz.AllActivity.QuestionsActivity;
-import com.example.raftaarquiz.AllActivity.QuizActivity;
 import com.example.raftaarquiz.Model.QuizCategories;
 import com.example.raftaarquiz.R;
 
@@ -56,7 +53,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
         holder.liner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,QuestionsActivity.class);
+                Intent intent = new Intent(context, QuestionsActivity.class);
                 intent.putExtra("id", list.get(position).getId());
                 context.startActivity(intent);
             }
