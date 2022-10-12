@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
+    android:layout_height="wrap_content"
     android:background="@color/Blue_Dress"
-    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".AllActivity.EditProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,7 +144,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
-                            android:hint="update password [minimum-6 character]"
+                            android:hint="Password [minimum-6 character]"
                             android:inputType="textPassword"
                             android:paddingHorizontal="15dp" />
 
@@ -185,7 +184,7 @@
                         android:id="@+id/saveBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="25dp"
                         android:layout_marginBottom="25dp"
                         android:background="@drawable/border_red"
                         android:backgroundTint="@color/blue"
@@ -193,13 +192,12 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white" />
 
-
                     <ProgressBar
                         android:id="@+id/progress_circular"
                         android:layout_width="match_parent"
-                        android:visibility="gone"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -209,4 +207,4 @@
 
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>
