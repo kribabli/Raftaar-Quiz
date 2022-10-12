@@ -36,7 +36,7 @@
                     android:padding="10dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/prifile_img"
+                        android:id="@+id/profilePic"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center"
@@ -129,6 +129,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:text="New Password"
+                        android:textColor="@color/Blue_Dress"
+                        android:textSize="18sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/border_radius"
+                        android:backgroundTint="#DADADA">
+
+                        <EditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:hint="update password [minimum-6 character]"
+                            android:inputType="textPassword"
+                            android:paddingHorizontal="15dp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
                         android:text="Gender"
                         android:textColor="@color/Blue_Dress"
                         android:textSize="18sp" />
@@ -165,6 +191,14 @@
                         android:backgroundTint="@color/blue"
                         android:text="SAVE"
                         android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+
+                    <ProgressBar
+                        android:id="@+id/progress_circular"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/white" />
 
                 </LinearLayout>

@@ -114,6 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
+                    progressBar.setVisibility(View.GONE);
+                    loginBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
