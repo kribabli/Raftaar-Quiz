@@ -11,6 +11,7 @@
         android:title="About Us" />
     <item
         android:id="@+id/share"
+        android:visible="false"
         android:icon="@drawable/ic_baseline_share_24"
         android:title="Share Apps" />
 
