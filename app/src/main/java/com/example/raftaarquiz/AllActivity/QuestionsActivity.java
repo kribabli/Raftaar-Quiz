@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -189,8 +188,6 @@ public class QuestionsActivity extends AppCompatActivity {
             } else {
                 showCustomDialog();
             }
-        } else {
-            Toast.makeText(this, "In this Quiz Section No Question Available", Toast.LENGTH_SHORT).show();
         }
     }
 
