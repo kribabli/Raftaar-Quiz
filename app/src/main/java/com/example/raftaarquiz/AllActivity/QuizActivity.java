@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -74,24 +75,16 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setAction() {
-        swiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swiper.setRefreshing(false);
-                getAllQuizList();
-                getAllTournamentList();
-                Animation animSlideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
-                recyclerView.startAnimation(animSlideDown);
-                tournament_Quiz.startAnimation(animSlideDown);
-            }
+        swiper.setOnRefreshListener(() -> {
+            swiper.setRefreshing(false);
+            getAllQuizList();
+            getAllTournamentList();
+            Animation animSlideDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+            recyclerView.startAnimation(animSlideDown);
+            tournament_Quiz.startAnimation(animSlideDown);
         });
 
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backPress.setOnClickListener(view -> onBackPressed());
     }
 
     private void getAllQuizList() {
@@ -125,7 +118,7 @@ public class QuizActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 return params;
             }
         };
@@ -167,7 +160,7 @@ public class QuizActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 return params;
             }
         };
@@ -192,7 +185,7 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull TournamentQuizAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull TournamentQuizAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
             holder.setIsRecyclable(false);
 
             holder.title.setText("" + list.get(position).getTitle());
@@ -228,8 +221,14 @@ public class QuizActivity extends AppCompatActivity {
 
             if (currentDate.compareTo(strDateTime) >= 0) {
                 holder.play_quiz.setVisibility(View.VISIBLE);
-                Toast.makeText(context, "Time Is Not Start", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Time Is Not Start", Toast.LENGTH_SHORT).show();
             }
+
+            holder.liner.setOnClickListener(v -> {
+                Intent intent = new Intent(context, TournamentQuestionActivity.class);
+                intent.putExtra("id", list.get(position).getId());
+                context.startActivity(intent);
+            });
         }
 
         @Override

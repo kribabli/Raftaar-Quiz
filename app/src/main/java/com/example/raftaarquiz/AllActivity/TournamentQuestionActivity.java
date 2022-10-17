@@ -39,10 +39,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QuestionsActivity extends AppCompatActivity {
+public class TournamentQuestionActivity extends AppCompatActivity {
     ImageView heart_img;
     TextView question_txt, option_a_txt, option_b_txt, option_c_txt, option_d_txt, score_txt;
-    String questionsUrl = "https://adminapp.tech/raftarquiz/api/exam/questions/";
+    String questionsUrl = "https://adminapp.tech/raftarquiz/userapi/turnamentquestions.php";
     String id;
     MutableLiveData<Integer> index = new MutableLiveData<>(0);
     MutableLiveData<Integer> rightCount = new MutableLiveData<>(0);
@@ -59,8 +59,7 @@ public class QuestionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questions);
-
+        setContentView(R.layout.activity_tournament_question);
         initMethod();
         setAction();
         getAllQuestionsList();
@@ -127,19 +126,19 @@ public class QuestionsActivity extends AppCompatActivity {
     private void getAllQuestionsList() {
         progressDialog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, questionsUrl + id, response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, questionsUrl, response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                JSONArray jsonArray = jsonObject.getJSONArray("message");
                 try {
                     if (jsonArray.length() > 0) {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
                             String id = jsonObject1.getString("id");
-                            String type = jsonObject1.getString("type");
-                            String category = jsonObject1.getString("category");
-                            String question = jsonObject1.getString("question");
-                            String question_image = jsonObject1.getString("question_image");
+                            String Type = jsonObject1.getString("Type");
+                            String Qusetion = jsonObject1.getString("Qusetion");
+                            String Image = jsonObject1.getString("Image");
                             String ans_type = jsonObject1.getString("ans_type");
                             String correct_ans = jsonObject1.getString("correct_ans");
 
@@ -147,9 +146,12 @@ public class QuestionsActivity extends AppCompatActivity {
                             String ans2 = jsonObject1.getString("ans2");
                             String ans3 = jsonObject1.getString("ans3");
                             String ans4 = jsonObject1.getString("ans4");
-                            questionsList = new QuestionsList(question, ans1, ans2, ans3, ans4, correct_ans);
+                            String date = jsonObject1.getString("date");
+
+                            questionsList = new QuestionsList(Qusetion, ans1, ans2, ans3, ans4, correct_ans);
                             listOfQ.add(questionsList);
                         }
+                        progressDialog.dismiss();
                         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
                         questionNoAdapter = new QuestionNoAdapter(listOfQ);
                         recyclerView.setAdapter(questionNoAdapter);
@@ -171,6 +173,7 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("cat_id", id);
                 return params;
             }
         };
@@ -192,7 +195,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void showCustomDialog() {
-        final Dialog dialog = new Dialog(QuestionsActivity.this);
+        final Dialog dialog = new Dialog(TournamentQuestionActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         dialog.setCancelable(false);
@@ -334,15 +337,15 @@ public class QuestionsActivity extends AppCompatActivity {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public QuestionNoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_question_no, parent, false);
             context = parent.getContext();
-            return new ViewHolder(view);
+            return new QuestionNoAdapter.ViewHolder(view);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
-        public void onBindViewHolder(final ViewHolder holder, final int position) {
+        public void onBindViewHolder(final QuestionNoAdapter.ViewHolder holder, final int position) {
             holder.setIsRecyclable(false);
             holder.noOfQuestion.setText("" + (position + 1));
         }

@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AllActivity.TournamentQuestionActivity"
+            android:exported="false" />
+        <activity
             android:name=".AllActivity.ViewCurrentAffairsActivity"
             android:exported="false" />
         <activity
@@ -36,7 +39,7 @@
             android:name=".AllActivity.ViewBookActivity"
             android:exported="false" />
         <activity
-            android:name=".AllActivity.QuestionsActivity"
+            android:name=".AllActivity.QuizQuestionsActivity"
             android:exported="false" />
         <activity
             android:name=".AllActivity.TestSeriesActivity"
