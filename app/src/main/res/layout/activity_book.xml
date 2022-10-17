@@ -44,7 +44,7 @@
             android:layout_width="250dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:src="@drawable/book_not_found" />
+            android:src="@drawable/no_items_found" />
 
     </LinearLayout>
 
