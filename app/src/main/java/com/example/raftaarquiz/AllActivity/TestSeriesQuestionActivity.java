@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,7 +42,7 @@ import java.util.Map;
 public class TestSeriesQuestionActivity extends AppCompatActivity {
     ImageView heart_img;
     TextView question_txt, option_a_txt, option_b_txt, option_c_txt, option_d_txt, score_txt;
-    String questionsUrl = "https://adminapp.tech/raftarquiz/api/exam/questions/";
+    String testSeriesQuestionsUrl = "https://adminapp.tech/raftarquiz/api/Note/notes/";
     String id;
     MutableLiveData<Integer> index = new MutableLiveData<>(0);
     MutableLiveData<Integer> rightCount = new MutableLiveData<>(0);
@@ -98,7 +97,7 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     private void getAllQuestionsList() {
         progressDialog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, questionsUrl + id, response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, testSeriesQuestionsUrl + id, response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -107,10 +106,12 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             String id = jsonObject1.getString("id");
+                            String title = jsonObject1.getString("title");
+                            String category_id = jsonObject1.getString("category_id");
+                            String pdf_url = jsonObject1.getString("pdf_url");
                             String type = jsonObject1.getString("type");
-                            String category = jsonObject1.getString("category");
-                            String question = jsonObject1.getString("question");
-                            String question_image = jsonObject1.getString("question_image");
+                            String question_img = jsonObject1.getString("question_img");
+
                             String ans_type = jsonObject1.getString("ans_type");
                             String correct_ans = jsonObject1.getString("correct_ans");
 
@@ -118,7 +119,9 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
                             String ans2 = jsonObject1.getString("ans2");
                             String ans3 = jsonObject1.getString("ans3");
                             String ans4 = jsonObject1.getString("ans4");
-                            questionsList = new QuestionsList(question, ans1, ans2, ans3, ans4, correct_ans);
+                            String date = jsonObject1.getString("date");
+
+                            questionsList = new QuestionsList(title, ans1, ans2, ans3, ans4, correct_ans);
                             listOfQ.add(questionsList);
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -185,8 +188,6 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
             } else {
                 showCustomDialog();
             }
-        } else {
-            Toast.makeText(this, "In this Quiz Section No Question Available", Toast.LENGTH_SHORT).show();
         }
     }
 
