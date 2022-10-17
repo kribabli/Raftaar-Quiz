@@ -30,6 +30,5 @@ public class AboutUsActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
     }
 }

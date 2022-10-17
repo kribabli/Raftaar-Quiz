@@ -26,7 +26,7 @@ public interface UsersServices {
 
     @Multipart
     @POST("updateprofile.php")
-    Call<ProfileResponse>UpdateProfileData(
+    Call<ProfileResponse> UpdateProfileData(
             @Part("id") RequestBody id,
             @Part("name") RequestBody username,
             @Part("contact_number") RequestBody mobile,
@@ -35,5 +35,4 @@ public interface UsersServices {
             @Part MultipartBody.Part image_url,
             @Part("gender") RequestBody gender
     );
-
 }

@@ -68,26 +68,24 @@
                     android:overScrollMode="never"
                     android:paddingTop="10dp" />
 
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="Tournament Quiz"
+                    android:layout_gravity="center"
                     android:background="@color/blue"
                     android:gravity="center"
-                    android:textStyle="bold"
-                    android:paddingLeft="4dp"/>
-
-
+                    android:padding="10dp"
+                    android:text="Tournament Quiz"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tournament_Quiz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tournament_Quiz"
                     android:overScrollMode="never"
-                    android:paddingTop="10dp"/>
+                    android:paddingTop="10dp" />
 
             </LinearLayout>
 

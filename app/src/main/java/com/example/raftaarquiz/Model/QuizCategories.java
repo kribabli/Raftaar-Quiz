@@ -1,8 +1,7 @@
 package com.example.raftaarquiz.Model;
 
 public class QuizCategories {
-    String id, title, image,Quiz_start_time, Quiz_close_time,Quiz_date;
-
+    String id, title, image, Quiz_start_time, Quiz_close_time, Quiz_date;
 
     public QuizCategories(String id, String title, String image, String quiz_start_time, String quiz_close_time, String quiz_date) {
         this.id = id;
@@ -12,7 +11,6 @@ public class QuizCategories {
         Quiz_close_time = quiz_close_time;
         Quiz_date = quiz_date;
     }
-
 
     public String getId() {
         return id;
