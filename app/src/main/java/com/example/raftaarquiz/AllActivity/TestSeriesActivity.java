@@ -88,7 +88,7 @@ public class TestSeriesActivity extends AppCompatActivity {
                         String Name = jsonObject1.getString("Name");
                         String Image = jsonObject1.getString("Image");
 
-                        QuizCategories quizCategories = new QuizCategories(id, Name, Image);
+                        QuizCategories quizCategories = new QuizCategories(id, Name, Image,"","","");
                         listItems.add(quizCategories);
                     }
                     recyclerView.setLayoutManager(new GridLayoutManager(this, 2));

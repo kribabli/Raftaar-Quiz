@@ -85,7 +85,10 @@ public class QuizActivity extends AppCompatActivity {
                         String id = jsonObject1.getString("id");
                         String title = jsonObject1.getString("title");
                         String image = jsonObject1.getString("image");
-                        QuizCategories quizCategories = new QuizCategories(id, title, image);
+                        String open_time = jsonObject1.getString("open_time");
+                        String close_time = jsonObject1.getString("close_time");
+                        String date = jsonObject1.getString("date");
+                        QuizCategories quizCategories = new QuizCategories(id, title, image,open_time,close_time,date);
                         listItems.add(quizCategories);
                     }
                     recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
