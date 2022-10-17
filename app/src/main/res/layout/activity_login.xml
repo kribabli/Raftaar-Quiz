@@ -18,7 +18,7 @@
             android:layout_height="100dp"
             android:layout_below="@+id/relativeLayout1"
             android:layout_gravity="center"
-            android:src="@drawable/game_logo"
+            android:src="@drawable/total_test_logo"
             tools:ignore="NotSibling" />
 
         <TextView
