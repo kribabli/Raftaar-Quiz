@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,6 +144,8 @@ public class QuizActivity extends AppCompatActivity {
                         String Close_Time = jsonObject1.getString("Close Time");
                         String Date = jsonObject1.getString("Date");
 
+
+
                         QuizCategories quizCategories = new QuizCategories(id, Name, Image, Open_Time, Close_Time, Date);
                         tournament_listItems.add(quizCategories);
                     }
@@ -210,25 +213,24 @@ public class QuizActivity extends AppCompatActivity {
                 Date time2 = new SimpleDateFormat("yyyy-MM-dd h:mm").parse(closeDate);
                 Date d = new SimpleDateFormat("yyyy-MM-dd h:mm").parse(currentDate);
 
-                if (time1.before(d) && time2.after(d)) {
-                } else {
+                if (time1.after(d) && time2.before(d)) {
+                    holder.play_quiz.setVisibility(View.VISIBLE);
+                    holder.liner.setOnClickListener(v -> {
+                          Intent intent = new Intent(context, TournamentQuestionActivity.class);
+                          intent.putExtra("id", list.get(position).getId());
+                          context.startActivity(intent);
+                    });
+                    Log.d("Amit","Value 11 "+openDate+" "+closeDate);
+                } else{
+
                 }
 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            String strDateTime = "2022-10-17 12:20";
 
-            if (currentDate.compareTo(strDateTime) >= 0) {
-                holder.play_quiz.setVisibility(View.VISIBLE);
-//                Toast.makeText(context, "Time Is Not Start", Toast.LENGTH_SHORT).show();
-            }
 
-            holder.liner.setOnClickListener(v -> {
-                Intent intent = new Intent(context, TournamentQuestionActivity.class);
-                intent.putExtra("id", list.get(position).getId());
-                context.startActivity(intent);
-            });
+
         }
 
         @Override
