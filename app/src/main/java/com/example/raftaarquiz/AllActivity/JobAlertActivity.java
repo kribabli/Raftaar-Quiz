@@ -3,6 +3,7 @@ package com.example.raftaarquiz.AllActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -33,6 +34,36 @@ public class JobAlertActivity extends AppCompatActivity {
         latest_job_liner.startAnimation(animSlideDown);
         admission_liner.startAnimation(animSlideDown);
         all_india_liner.startAnimation(animSlideDown);
+
+        latest_job_liner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(JobAlertActivity.this, AllWebViewActivity.class);
+                intent.putExtra("types", "1");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        admission_liner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(JobAlertActivity.this, AllWebViewActivity.class);
+                intent.putExtra("types", "2");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        all_india_liner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(JobAlertActivity.this, AllWebViewActivity.class);
+                intent.putExtra("types", "3");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         backPress.setOnClickListener(new View.OnClickListener() {
             @Override

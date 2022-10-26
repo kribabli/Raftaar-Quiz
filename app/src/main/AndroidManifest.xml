@@ -21,7 +21,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AllActivity.WebView"
+            android:name=".AllActivity.AllWebViewActivity"
             android:exported="false" />
         <activity
             android:name=".AllActivity.TournamentQuestionActivity"
