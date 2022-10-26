@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtn;
     EditText email, password1;
     HelperData helperData;
+    Uri uri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("message").equalsIgnoreCase("Login Sucessfully")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-                    helperData.saveLogin(jsonObject1.getString("id"), jsonObject1.getString("Name"), jsonObject1.getString("Email"), jsonObject1.getString("Mobile"), jsonObject1.getString("refferal_code"));
+                    helperData.saveLogin(jsonObject1.getString("id"), jsonObject1.getString("Name"), jsonObject1.getString("Email"), jsonObject1.getString("Mobile"), jsonObject1.getString("refferal_code"), "");
                     progressBar.setVisibility(View.GONE);
                     loginBtn.setVisibility(View.VISIBLE);
                     helperData.saveIsLogin(true);
@@ -169,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
         if (googleSignInAccount != null) {
             userName = googleSignInAccount.getDisplayName();
             userEmail = googleSignInAccount.getEmail();
-            Uri uri = googleSignInAccount.getPhotoUrl();
+            uri = googleSignInAccount.getPhotoUrl();
         }
 
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
@@ -185,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                         String contact_number = jsonObject1.getString("contact_number");
                         String email = jsonObject1.getString("email");
                         String refferal_code = jsonObject1.getString("refferal_code");
-                        helperData.saveLogin(id, name, email, contact_number, refferal_code);
+                        helperData.saveLogin(id, name, email, contact_number, refferal_code, String.valueOf(uri));
                         helperData.saveIsLogin(true);
                     }
                     progressBar.setVisibility(View.GONE);

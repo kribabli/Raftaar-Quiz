@@ -46,16 +46,20 @@ public class MyProfileFragment extends Fragment {
         userName = root.findViewById(R.id.userName);
         profilePic = root.findViewById(R.id.profilePic);
         helperData = new HelperData(getContext());
-        linearlayout7.setOnClickListener(view -> userLogout());
-        userName.setText("" + helperData.getUserName());
+
+        setAction();
         googleSignIn();
         referAndEarn();
+        return root;
+    }
 
+    private void setAction() {
+        userName.setText("" + helperData.getUserName());
         linearlayout1.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), EditProfileActivity.class);
             startActivity(intent);
         });
-        return root;
+        linearlayout7.setOnClickListener(view -> userLogout());
     }
 
     private void googleSignIn() {
@@ -70,8 +74,14 @@ public class MyProfileFragment extends Fragment {
 
             Glide.with(getContext())
                     .load(photoUrl)
+                    .placeholder(R.drawable.ic_profile_pic)
                     .into(profilePic);
             Log.d("TAG", "onCreate: " + id + "  " + userName + "  " + userEmail + "  " + photoUrl);
+        } else {
+            Glide.with(getContext())
+                    .load(helperData.getSaveProfilePic())
+                    .placeholder(R.drawable.ic_profile_pic)
+                    .into(profilePic);
         }
     }
 

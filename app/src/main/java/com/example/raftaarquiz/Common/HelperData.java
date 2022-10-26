@@ -26,7 +26,7 @@ public class HelperData extends Application {
         editor.apply();
     }
 
-    public void saveLogin(String user_id, String user_name, String email, String mobile, String refferal_code) {
+    public void saveLogin(String user_id, String user_name, String email, String mobile, String refferal_code, String user_profile_url) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putString("user_id", user_id);
@@ -34,6 +34,7 @@ public class HelperData extends Application {
         editor.putString("email", email);
         editor.putString("mobile", mobile);
         editor.putString("refferal_code", refferal_code);
+        editor.putString("user_profile_url", user_profile_url);
         editor.apply();
     }
 
@@ -60,6 +61,23 @@ public class HelperData extends Application {
     public String getReferalCode() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
         return sharedPreferences.getString("refferal_code", "");
+    }
+
+    public String getProfilePic() {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
+        return sharedPreferences.getString("user_profile_url", "");
+    }
+
+    public void saveProfilePic(String user_update_profile) {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString("user_update_profile", user_update_profile);
+        editor.apply();
+    }
+
+    public String getSaveProfilePic() {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE);
+        return sharedPreferences.getString("user_update_profile", "");
     }
 
     public void Logout() {

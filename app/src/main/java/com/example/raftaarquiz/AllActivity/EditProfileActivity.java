@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.raftaarquiz.Common.HelperData;
 import com.example.raftaarquiz.Model.ProfileResponse;
 import com.example.raftaarquiz.R;
@@ -84,6 +85,10 @@ public class EditProfileActivity extends AppCompatActivity {
         username_edt.setText("" + helperData.getUserName());
         mobile_no.setText("" + helperData.getMobile());
         email_edt.setText("" + helperData.getUserEmail());
+        Glide.with(this)
+                .load(helperData.getSaveProfilePic())
+                .placeholder(R.drawable.ic_profile_pic)
+                .into(profilePic);
     }
 
     private boolean validationFromBox() {
@@ -167,6 +172,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     profileImagePath = FileUriUtils.INSTANCE.getRealPath(this, data.getData());
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
                     profilePic.setImageURI(filePath);
+                    helperData.saveProfilePic(String.valueOf(filePath));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
