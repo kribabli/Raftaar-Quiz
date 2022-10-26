@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -177,20 +178,22 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
+                Log.d("Amit","Value 111 "+jsonObject);
                 if (jsonObject.getString("status").equalsIgnoreCase("success")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String id = jsonObject1.getString("id");
                         String name = jsonObject1.getString("name");
                         String contact_number = jsonObject1.getString("contact_number");
                         String email = jsonObject1.getString("email");
-                        String refferal_code = jsonObject1.getString("refferal_code");
-                        helperData.saveLogin(id, name, email, contact_number, refferal_code, String.valueOf(uri));
+                        String refer_code = jsonObject1.getString("refer_code");
+                        helperData.saveLogin(id, name, email, contact_number, refer_code, String.valueOf(uri));
                         helperData.saveIsLogin(true);
                     }
                     progressBar.setVisibility(View.GONE);
                     loginBtn.setVisibility(View.VISIBLE);
+                    Log.d("Amit","Value check "+jsonArray);
                     Toast.makeText(LoginActivity.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
