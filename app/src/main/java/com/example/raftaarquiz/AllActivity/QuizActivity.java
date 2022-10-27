@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,8 +143,6 @@ public class QuizActivity extends AppCompatActivity {
                         String Close_Time = jsonObject1.getString("Close Time");
                         String Date = jsonObject1.getString("Date");
 
-
-
                         QuizCategories quizCategories = new QuizCategories(id, Name, Image, Open_Time, Close_Time, Date);
                         tournament_listItems.add(quizCategories);
                     }
@@ -208,6 +205,13 @@ public class QuizActivity extends AppCompatActivity {
             String openDate = dateString + " " + timeString;
             String closeDate = dateString + " " + timeString1;
 
+            //for date time.(Show)
+            String openDateOnly = openDate.split("\\ ")[0].split("\\ ")[0];
+            String openTimeOnly = openDate.split("\\ ")[1].split("\\ ")[0];
+            String closeTimeOnly = closeDate.split("\\ ")[1].split("\\ ")[0];
+            holder.dateTime.setVisibility(View.VISIBLE);
+            holder.dateTime.setText(openDateOnly + "   " + openTimeOnly + "-" + closeTimeOnly);
+
             try {
                 Date time1 = new SimpleDateFormat("yyyy-MM-dd h:mm").parse(openDate);
                 Date time2 = new SimpleDateFormat("yyyy-MM-dd h:mm").parse(closeDate);
@@ -216,21 +220,15 @@ public class QuizActivity extends AppCompatActivity {
                 if (time1.after(d) && time2.before(d)) {
                     holder.play_quiz.setVisibility(View.VISIBLE);
                     holder.liner.setOnClickListener(v -> {
-                          Intent intent = new Intent(context, TournamentQuestionActivity.class);
-                          intent.putExtra("id", list.get(position).getId());
-                          context.startActivity(intent);
+                        Intent intent = new Intent(context, TournamentQuestionActivity.class);
+                        intent.putExtra("id", list.get(position).getId());
+                        context.startActivity(intent);
                     });
-                    Log.d("Amit","Value 11 "+openDate+" "+closeDate);
-                } else{
-
+                } else {
                 }
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-
-
         }
 
         @Override
@@ -240,12 +238,13 @@ public class QuizActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             CircleImageView imageView;
-            TextView title, play_quiz, Join_contests;
+            TextView title, play_quiz, Join_contests, dateTime;
             LinearLayout liner;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 imageView = itemView.findViewById(R.id.img);
+                dateTime = itemView.findViewById(R.id.dateTime);
                 title = itemView.findViewById(R.id.title_txt);
                 liner = itemView.findViewById(R.id.liner);
                 play_quiz = itemView.findViewById(R.id.play_quiz);
