@@ -42,7 +42,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setIsRecyclable(false);
-        holder.title.setText("" + list.get(position).getTitle());
+        holder.quizTitle.setText("" + list.get(position).getTitle());
 
         try {
             Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.logo).into(holder.imageView);
@@ -67,14 +67,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageView;
-        TextView title;
+        TextView quizTitle;
         LinearLayout liner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.img);
-            title = itemView.findViewById(R.id.title_txt);
-            liner = itemView.findViewById(R.id.liner);
+            imageView = itemView.findViewById(R.id.quizImg);
+            quizTitle = itemView.findViewById(R.id.quizTitle);
+            liner = itemView.findViewById(R.id.LinearLayout2);
         }
     }
 }

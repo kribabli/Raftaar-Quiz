@@ -9,7 +9,7 @@
         android:layout_height="110dp">
 
         <LinearLayout
-            android:id="@+id/liner"
+            android:id="@+id/LinearLayout"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:elevation="5dp"
@@ -17,6 +17,7 @@
             android:weightSum="10">
 
             <LinearLayout
+                android:id="@+id/LinearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
                 android:layout_gravity="center"
@@ -27,7 +28,7 @@
                 android:weightSum="10">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img"
+                    android:id="@+id/quizImg"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"
@@ -37,7 +38,7 @@
                     app:civ_circle_background_color="@color/white" />
 
                 <TextView
-                    android:id="@+id/title_txt"
+                    android:id="@+id/quizTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

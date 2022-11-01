@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,10 +106,11 @@ public class QuizActivity extends AppCompatActivity {
                         QuizCategories quizCategories = new QuizCategories(id, title, image, "", "", "");
                         listItems.add(quizCategories);
                     }
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     quizAdapter = new QuizAdapter(listItems);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(quizAdapter);
                     quizAdapter.notifyDataSetChanged();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
