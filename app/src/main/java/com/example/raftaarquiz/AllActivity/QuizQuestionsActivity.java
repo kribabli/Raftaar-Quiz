@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -189,7 +190,12 @@ public class QuizQuestionsActivity extends AppCompatActivity {
                 option_c_txt.setText(listOfQ.get(value).getoC());
                 option_d_txt.setText(listOfQ.get(value).getoD());
             } else {
+                //next and finish Dialog
                 showCustomDialog();
+//                Intent intent=new Intent(QuizQuestionsActivity.this,FullDialogActivity.class);
+//                intent.putExtra("rightCount", String.valueOf(rightCount));
+//                intent.putExtra("wrongCount", String.valueOf(wrongCount));
+//                startActivity(intent);
             }
         }
     }
