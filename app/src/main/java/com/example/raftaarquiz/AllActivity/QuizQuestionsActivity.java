@@ -91,16 +91,13 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     private void setAction() {
         id = getIntent().getStringExtra("id");
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                index.setValue(index.getValue() + 1);
-                setAllQuestion(index.getValue());
-                enableButton();
-                resetColor();
-                countDownTimer.cancel();
-                countDownTimer();
-            }
+        submitBtn.setOnClickListener(view -> {
+            index.setValue(index.getValue() + 1);
+            setAllQuestion(index.getValue());
+            enableButton();
+            resetColor();
+            countDownTimer.cancel();
+            countDownTimer();
         });
     }
 
