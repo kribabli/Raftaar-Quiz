@@ -9,11 +9,11 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:background="@drawable/round_with_border"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/black"
         android:gravity="center"
         android:padding="3dp"
         android:text="1"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="12sp" />
 
 </RelativeLayout>

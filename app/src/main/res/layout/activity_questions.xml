@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/bg"
     tools:context=".AllActivity.QuizQuestionsActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -26,7 +26,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="Timer : 0"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
