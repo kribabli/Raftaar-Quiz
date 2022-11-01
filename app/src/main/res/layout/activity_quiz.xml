@@ -65,13 +65,14 @@
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    android:paddingTop="10dp" />
+                    android:background="@drawable/bg_dot"
+                    android:overScrollMode="never" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:background="@color/blue"
                     android:gravity="center"
                     android:padding="10dp"

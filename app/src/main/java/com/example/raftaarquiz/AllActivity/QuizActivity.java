@@ -3,6 +3,7 @@ package com.example.raftaarquiz.AllActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -104,7 +105,7 @@ public class QuizActivity extends AppCompatActivity {
                         QuizCategories quizCategories = new QuizCategories(id, title, image, "", "", "");
                         listItems.add(quizCategories);
                     }
-                    recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     quizAdapter = new QuizAdapter(listItems);
                     recyclerView.setAdapter(quizAdapter);
                     quizAdapter.notifyDataSetChanged();
