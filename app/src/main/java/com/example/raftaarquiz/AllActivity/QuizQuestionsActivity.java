@@ -42,6 +42,7 @@ import java.util.Map;
 public class QuizQuestionsActivity extends AppCompatActivity {
     ImageView heart_img;
     TextView question_txt, option_a_txt, option_b_txt, option_c_txt, option_d_txt, score_txt;
+    TextView btnA, btnB, btnC, btnD;
     String questionsUrl = "https://adminapp.tech/raftarquiz/api/exam/questions/";
     String id;
     MutableLiveData<Integer> index = new MutableLiveData<>(0);
@@ -76,6 +77,11 @@ public class QuizQuestionsActivity extends AppCompatActivity {
         option_c_txt = findViewById(R.id.option_c_txt);
         option_d_txt = findViewById(R.id.option_d_txt);
         question_txt = findViewById(R.id.question_txt);
+
+        btnA = findViewById(R.id.btnA);
+        btnB = findViewById(R.id.btnB);
+        btnC = findViewById(R.id.btnC);
+        btnD = findViewById(R.id.btnD);
 
         submitBtn = findViewById(R.id.submitBtn);
         recyclerView = findViewById(R.id.recyclerView);
@@ -180,7 +186,7 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void setAllQuestion(Integer value) {
         if (listOfQ.size() > 0) {
             if (listOfQ.size() > index.getValue()) {
-                question_txt.setText(listOfQ.get(value).getQuestions());
+                question_txt.setText("[" + (index.getValue() + 1) + "/" + listOfQ.size() + "]" + " Q_ " + listOfQ.get(value).getQuestions());
                 option_a_txt.setText(listOfQ.get(value).getoA());
                 option_b_txt.setText(listOfQ.get(value).getoB());
                 option_c_txt.setText(listOfQ.get(value).getoC());
@@ -222,46 +228,53 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     }
 
     public void enableButton() {
-        option_a_txt.setClickable(true);
-        option_b_txt.setClickable(true);
-        option_c_txt.setClickable(true);
-        option_d_txt.setClickable(true);
+        btnA.setClickable(true);
+        btnB.setClickable(true);
+        btnC.setClickable(true);
+        btnD.setClickable(true);
     }
 
     public void disableButton() {
-        option_a_txt.setClickable(false);
-        option_b_txt.setClickable(false);
-        option_c_txt.setClickable(false);
-        option_d_txt.setClickable(false);
+        btnA.setClickable(false);
+        btnB.setClickable(false);
+        btnC.setClickable(false);
+        btnD.setClickable(false);
     }
 
     public void resetColor() {
-        option_a_txt.setBackgroundColor(getResources().getColor(R.color.white));
-        option_b_txt.setBackgroundColor(getResources().getColor(R.color.white));
-        option_c_txt.setBackgroundColor(getResources().getColor(R.color.white));
-        option_d_txt.setBackgroundColor(getResources().getColor(R.color.white));
+        btnA.setBackgroundColor(getResources().getColor(R.color.white));
+        btnB.setBackgroundColor(getResources().getColor(R.color.white));
+        btnC.setBackgroundColor(getResources().getColor(R.color.white));
+        btnD.setBackgroundColor(getResources().getColor(R.color.white));
 
-        option_a_txt.setBackgroundResource(R.drawable.round_with_border);
-        option_b_txt.setBackgroundResource(R.drawable.round_with_border);
-        option_c_txt.setBackgroundResource(R.drawable.round_with_border);
-        option_d_txt.setBackgroundResource(R.drawable.round_with_border);
+        //1st question set no bg then click next the bg (By this code)
+//        option_a_txt.setBackgroundResource(R.drawable.round_with_border);
+//        option_b_txt.setBackgroundResource(R.drawable.round_with_border);
+//        option_c_txt.setBackgroundResource(R.drawable.round_with_border);
+//        option_d_txt.setBackgroundResource(R.drawable.round_with_border);
+
+        //1st question set no bg then click next the bg (By this code)
+        btnA.setBackgroundResource(R.drawable.c_vc_border_rounded);
+        btnB.setBackgroundResource(R.drawable.c_vc_border_rounded);
+        btnC.setBackgroundResource(R.drawable.c_vc_border_rounded);
+        btnD.setBackgroundResource(R.drawable.c_vc_border_rounded);
     }
 
     public void OptionAClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-            option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoA()) {
             wrongCount.setValue(wrongCount.getValue() + 1);
-            option_a_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnA.setBackgroundColor(getResources().getColor(R.color.red));
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
         }
     }
@@ -269,18 +282,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionBClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-            option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoB()) {
-            option_b_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnB.setBackgroundColor(getResources().getColor(R.color.red));
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
         }
     }
@@ -288,18 +301,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionCClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-            option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoC()) {
-            option_c_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnC.setBackgroundColor(getResources().getColor(R.color.red));
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
         }
     }
@@ -307,18 +320,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionDClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-            option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoD()) {
-            option_d_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnD.setBackgroundColor(getResources().getColor(R.color.red));
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
             }
         }
     }
