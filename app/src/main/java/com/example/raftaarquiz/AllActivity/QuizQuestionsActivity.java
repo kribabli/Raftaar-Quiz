@@ -66,7 +66,8 @@ public class QuizQuestionsActivity extends AppCompatActivity {
         initMethod();
         setAction();
         getAllQuestionsList();
-        countDownTimer();
+        //for countDownTimer
+        //countDownTimer();
     }
 
     private void initMethod() {
@@ -97,8 +98,10 @@ public class QuizQuestionsActivity extends AppCompatActivity {
             setAllQuestion(index.getValue());
             enableButton();
             resetColor();
-            countDownTimer.cancel();
-            countDownTimer();
+
+            //for countDownTimer
+            //countDownTimer.cancel();
+            //countDownTimer();
         });
     }
 
@@ -113,11 +116,11 @@ public class QuizQuestionsActivity extends AppCompatActivity {
 
                 long sec = (millisUntilFinished / 1000) % 60;
 
-                timer.setText("Timer : " + f.format(sec));
+                //timer.setText("Timer : " + f.format(sec));
             }
 
             public void onFinish() {
-                timer.setText("0");
+                //timer.setText("0");
                 this.start();
                 index.setValue(index.getValue() + 1);
                 setAllQuestion(index.getValue());
@@ -191,11 +194,13 @@ public class QuizQuestionsActivity extends AppCompatActivity {
                 option_d_txt.setText(listOfQ.get(value).getoD());
             } else {
                 //next and finish Dialog
-                showCustomDialog();
-//                Intent intent=new Intent(QuizQuestionsActivity.this,FullDialogActivity.class);
-//                intent.putExtra("rightCount", String.valueOf(rightCount));
-//                intent.putExtra("wrongCount", String.valueOf(wrongCount));
-//                startActivity(intent);
+//                showCustomDialog();
+                Intent intent = new Intent(QuizQuestionsActivity.this, FullDialogActivity.class);
+                intent.putExtra("rightCount", String.valueOf(rightCount.getValue()));
+                intent.putExtra("wrongCount", String.valueOf(wrongCount.getValue()));
+                intent.putExtra("totalQuestion", String.valueOf(index.getValue()));
+                startActivity(intent);
+                finish();
             }
         }
     }
@@ -224,9 +229,10 @@ public class QuizQuestionsActivity extends AppCompatActivity {
             resetColor();
             dialog.dismiss();
             score_txt.setText("Score : " + 0);
+
             //countDownTimer cancel and start new countDownTimer
-            countDownTimer.cancel();
-            countDownTimer();
+            // countDownTimer.cancel();
+            //countDownTimer();
         });
     }
 

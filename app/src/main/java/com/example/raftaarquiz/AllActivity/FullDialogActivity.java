@@ -11,7 +11,7 @@ import com.example.raftaarquiz.R;
 
 public class FullDialogActivity extends AppCompatActivity {
     ImageView sadOrHappyImg;
-    TextView totalQuestion, next,rightAns,wrongAns;
+    TextView totalQuestion, next, rightAns, wrongAns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,10 @@ public class FullDialogActivity extends AppCompatActivity {
     }
 
     private void setAction() {
+        rightAns.setText(getIntent().getStringExtra("rightCount"));
+        wrongAns.setText(getIntent().getStringExtra("wrongCount"));
+        totalQuestion.setText(getIntent().getStringExtra("totalQuestion"));
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
