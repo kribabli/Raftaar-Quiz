@@ -31,6 +31,7 @@ public class FullDialogActivity extends AppCompatActivity {
         wrongAns.setText(getIntent().getStringExtra("wrongCount"));
         totalQuestion.setText(getIntent().getStringExtra("totalQuestion"));
 
+        
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

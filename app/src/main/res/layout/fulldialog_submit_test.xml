@@ -117,7 +117,9 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/c_vc_border_rounded"
+                android:clickable="true"
                 android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:foreground="?selectableItemBackground"
                 android:gravity="end"
                 android:padding="12dp" />
 

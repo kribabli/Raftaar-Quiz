@@ -58,6 +58,7 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     TextView timer;
     CountDownTimer countDownTimer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
