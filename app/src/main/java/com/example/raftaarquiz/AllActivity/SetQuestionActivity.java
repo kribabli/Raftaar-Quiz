@@ -12,6 +12,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +57,7 @@ public class SetQuestionActivity extends AppCompatActivity {
     QuestionNoAdapter questionNoAdapter;
     TextView timer;
     CountDownTimer countDownTimer;
+    MutableLiveData<Integer> remainingSec = new MutableLiveData<>(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +82,34 @@ public class SetQuestionActivity extends AppCompatActivity {
         submitBtn = findViewById(R.id.submitBtn);
         recyclerView = findViewById(R.id.recyclerView);
         progressDialog = new ProgressDialog(this);
+
+        Log.d("Amit","Value 222 "+remainingSec.getValue());
     }
 
     private void setAction() {
         category_id = getIntent().getStringExtra("id");
 
-        submitBtn.setOnClickListener(view -> {
-            index.setValue(index.getValue() + 1);
-            setAllQuestion(index.getValue());
-            enableButton();
-            resetColor();
-            countDownTimer.cancel();
-            countDownTimer();
-        });
+
+        new CountDownTimer(8000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                submitBtn.setText("Wait for " + (millisUntilFinished / 1000) + " seconds");
+            }
+            public void onFinish() {
+                submitBtn.setEnabled(true);
+                submitBtn.setOnClickListener(view -> {
+                    index.setValue(index.getValue() + 1);
+                    setAllQuestion(index.getValue());
+                    enableButton();
+                    resetColor();
+                    countDownTimer.cancel();
+                    countDownTimer();
+                });
+            }
+        }.start();
+
+
+
     }
 
     private void getAllQuestionsList() {
@@ -160,6 +178,8 @@ public class SetQuestionActivity extends AppCompatActivity {
                 long min = (millisUntilFinished / 60000) % 60;
 
                 long sec = (millisUntilFinished / 1000) % 60;
+
+               remainingSec.setValue(Math.toIntExact(sec));
 
                 timer.setText("Timer : " + f.format(sec));
             }
