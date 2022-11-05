@@ -26,6 +26,7 @@ public interface UsersServices {
             @Part("gender") RequestBody gender
     );
 
+    
     @FormUrlEncoded
     @POST("score.php")
     Call<ScoreResponse> SendUserScoreOnServer(
