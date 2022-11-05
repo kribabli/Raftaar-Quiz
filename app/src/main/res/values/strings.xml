@@ -8,4 +8,5 @@
     <string name="menu_home">Home</string>
     <string name="back_key">Please click back again to exit</string>
     <string name="title">EXAM CATEGORIES</string>
+    <string name="title1">AVAILABLE TEST SERIES</string>
 </resources>

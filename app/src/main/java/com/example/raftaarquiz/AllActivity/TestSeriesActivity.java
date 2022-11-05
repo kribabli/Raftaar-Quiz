@@ -142,8 +142,9 @@ public class TestSeriesActivity extends AppCompatActivity {
             }
 
             holder.liner.setOnClickListener(v -> {
-                Intent intent = new Intent(context, TestSeriesQuestionActivity.class);
+                Intent intent = new Intent(context, AvailableTestSeriesActivity.class);
                 intent.putExtra("id", list.get(position).getId());
+                intent.putExtra("examName", list.get(position).getTitle());
                 context.startActivity(intent);
             });
         }
