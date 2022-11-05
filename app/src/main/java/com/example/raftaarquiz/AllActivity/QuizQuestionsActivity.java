@@ -58,7 +58,6 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     TextView timer;
     CountDownTimer countDownTimer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +67,7 @@ public class QuizQuestionsActivity extends AppCompatActivity {
         setAction();
         getAllQuestionsList();
         //for countDownTimer
-        //countDownTimer();
+        countDownTimer();
     }
 
     private void initMethod() {
@@ -93,21 +92,10 @@ public class QuizQuestionsActivity extends AppCompatActivity {
 
     private void setAction() {
         id = getIntent().getStringExtra("id");
-
-        submitBtn.setOnClickListener(view -> {
-            index.setValue(index.getValue() + 1);
-            setAllQuestion(index.getValue());
-            enableButton();
-            resetColor();
-
-            //for countDownTimer
-            //countDownTimer.cancel();
-            //countDownTimer();
-        });
     }
 
     private void countDownTimer() {
-        countDownTimer = new CountDownTimer(15000, 1000) {
+        countDownTimer = new CountDownTimer(8000, 1000) {
             public void onTick(long millisUntilFinished) {
                 NumberFormat f = new DecimalFormat("1");
 
@@ -117,19 +105,31 @@ public class QuizQuestionsActivity extends AppCompatActivity {
 
                 long sec = (millisUntilFinished / 1000) % 60;
 
-                //timer.setText("Timer : " + f.format(sec));
+                submitBtn.setClickable(false);
+                submitBtn.setText("Wait for " + f.format(sec) + " seconds");
             }
 
             public void onFinish() {
-                //timer.setText("0");
-                this.start();
-                index.setValue(index.getValue() + 1);
-                setAllQuestion(index.getValue());
-                enableButton();
-                resetColor();
+                submitBtn.setClickable(true);
+                submitBtn.setText("Next");
+                submitBtn.setOnClickListener(view -> {
+                    submitBtn.setClickable(false);
+                    countDownTimer.cancel();
+                    countDownTimer.start();
+                    index.setValue(index.getValue() + 1);
+                    setAllQuestion(index.getValue());
+                    enableButton();
+                    resetColor();
+                });
             }
         };
         countDownTimer.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countDownTimer();
     }
 
     private void getAllQuestionsList() {
@@ -258,12 +258,6 @@ public class QuizQuestionsActivity extends AppCompatActivity {
         btnD.setBackgroundColor(getResources().getColor(R.color.white));
 
         //1st question set no bg then click next the bg (By this code)
-//        option_a_txt.setBackgroundResource(R.drawable.round_with_border);
-//        option_b_txt.setBackgroundResource(R.drawable.round_with_border);
-//        option_c_txt.setBackgroundResource(R.drawable.round_with_border);
-//        option_d_txt.setBackgroundResource(R.drawable.round_with_border);
-
-        //1st question set no bg then click next the bg (By this code)
         btnA.setBackgroundResource(R.drawable.c_vc_border_rounded);
         btnB.setBackgroundResource(R.drawable.c_vc_border_rounded);
         btnC.setBackgroundResource(R.drawable.c_vc_border_rounded);
@@ -273,18 +267,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionAClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-            btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnA.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoA()) {
             wrongCount.setValue(wrongCount.getValue() + 1);
-            btnA.setBackgroundColor(getResources().getColor(R.color.red));
+            btnA.setBackgroundResource(R.drawable.circle);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
@@ -292,18 +286,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionBClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-            btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnB.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoB()) {
-            btnB.setBackgroundColor(getResources().getColor(R.color.red));
+            btnB.setBackgroundResource(R.drawable.circle);
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
@@ -311,18 +305,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionCClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-            btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnC.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoC()) {
-            btnC.setBackgroundColor(getResources().getColor(R.color.red));
+            btnC.setBackgroundResource(R.drawable.circle);
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
@@ -330,18 +324,18 @@ public class QuizQuestionsActivity extends AppCompatActivity {
     public void OptionDClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-            btnD.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnD.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoD()) {
-            btnD.setBackgroundColor(getResources().getColor(R.color.red));
+            btnD.setBackgroundResource(R.drawable.circle);
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                btnA.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                btnB.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                btnC.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }

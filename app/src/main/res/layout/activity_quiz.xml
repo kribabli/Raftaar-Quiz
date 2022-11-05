@@ -79,14 +79,17 @@
                     android:text="Tournament Quiz"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tournament_Quiz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_dot"
                     android:overScrollMode="never"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:visibility="visible" />
 
             </LinearLayout>
 

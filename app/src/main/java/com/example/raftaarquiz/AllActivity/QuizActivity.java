@@ -2,7 +2,6 @@ package com.example.raftaarquiz.AllActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -149,7 +148,7 @@ public class QuizActivity extends AppCompatActivity {
                         QuizCategories quizCategories = new QuizCategories(id, Name, Image, Open_Time, Close_Time, Date);
                         tournament_listItems.add(quizCategories);
                     }
-                    tournament_Quiz.setLayoutManager(new GridLayoutManager(this, 2));
+                    tournament_Quiz.setLayoutManager(new LinearLayoutManager(this));
                     tournamentQuizAdapter = new TournamentQuizAdapter(tournament_listItems);
                     tournament_Quiz.setAdapter(tournamentQuizAdapter);
                     tournamentQuizAdapter.notifyDataSetChanged();
@@ -220,9 +219,13 @@ public class QuizActivity extends AppCompatActivity {
                 Date time2 = new SimpleDateFormat("yyyy-MM-dd h:mm").parse(closeDate);
                 Date d = new SimpleDateFormat("yyyy-MM-dd h:mm").parse(currentDate);
 
+                Log.d("TAG", "onBindViewHolder:time1 " + time1);
+                Log.d("TAG", "onBindViewHolder:time2 " + time2);
+                Log.d("TAG", "onBindViewHolder:d " + d);
+
                 if (time1.after(d) && time2.before(d)) {
                     holder.play_quiz.setVisibility(View.VISIBLE);
-                    holder.liner.setOnClickListener(v -> {
+                    holder.linearLayout.setOnClickListener(v -> {
                         Intent intent = new Intent(context, TournamentQuestionActivity.class);
                         intent.putExtra("id", list.get(position).getId());
                         context.startActivity(intent);
@@ -241,17 +244,16 @@ public class QuizActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             CircleImageView imageView;
-            TextView title, play_quiz, Join_contests, dateTime;
-            LinearLayout liner;
+            TextView title, play_quiz, dateTime;
+            LinearLayout linearLayout;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                imageView = itemView.findViewById(R.id.img);
+                imageView = itemView.findViewById(R.id.quizImg);
                 dateTime = itemView.findViewById(R.id.dateTime);
-                title = itemView.findViewById(R.id.title_txt);
-                liner = itemView.findViewById(R.id.liner);
-                play_quiz = itemView.findViewById(R.id.play_quiz);
-                Join_contests = itemView.findViewById(R.id.Join_contests);
+                title = itemView.findViewById(R.id.quizTitle);
+                linearLayout = itemView.findViewById(R.id.LinearLayout);
+//                play_quiz = itemView.findViewById(R.id.play_quiz);
             }
         }
     }

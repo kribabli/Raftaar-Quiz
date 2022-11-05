@@ -6,93 +6,83 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp">
 
         <LinearLayout
-            android:id="@+id/liner"
+            android:id="@+id/LinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/border_radius_blue"
-            android:backgroundTint="@color/blue"
+            android:layout_height="120dp"
             android:clickable="true"
             android:elevation="5dp"
             android:foreground="?selectableItemBackground"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="10">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <LinearLayout
+                android:id="@+id/LinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/logo"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="1dp"
-                app:civ_circle_background_color="@color/white" />
-
-            <TextView
-                android:id="@+id/title_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginVertical="5dp"
                 android:gravity="center"
-                android:text="Title"
-                android:textColor="@color/white" />
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/quizImg"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/logo"
+                    app:civ_border_color="@color/white"
+                    app:civ_circle_background_color="@color/white" />
+
+                <TextView
+                    android:id="@+id/quizTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="9"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_small"
+                    android:gravity="left"
+                    android:text="Title"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Date Time"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white" />
-
-            <TextView
-                android:id="@+id/play_quiz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginVertical="5dp"
-                android:gravity="center"
-                android:text="Play Quiz"
-                android:textColor="@color/white"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:id="@+id/Join_contests"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginVertical="5dp"
-                android:gravity="center"
-                android:text="Join Quiz"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/dateTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginVertical="5dp"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="Date Time"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:layout_height=".8dp"
+                android:background="@color/black" />
 
         </LinearLayout>
 
     </RelativeLayout>
-
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_margin="20dp"
-        android:src="@drawable/bar_chart" />
 
 </RelativeLayout>

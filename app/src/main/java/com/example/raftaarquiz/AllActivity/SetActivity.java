@@ -2,7 +2,7 @@ package com.example.raftaarquiz.AllActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -91,7 +91,7 @@ public class SetActivity extends AppCompatActivity {
                         QuizCategories quizCategories = new QuizCategories(id, Name, Image, "", "", "");
                         listItems.add(quizCategories);
                     }
-                    recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     setAdapter = new SetAdapter(listItems);
                     recyclerView.setAdapter(setAdapter);
                     setAdapter.notifyDataSetChanged();
@@ -124,7 +124,7 @@ public class SetActivity extends AppCompatActivity {
         @NonNull
         @Override
         public SetAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_category, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_category_line, parent, false);
             context = parent.getContext();
 
             return new SetAdapter.ViewHolder(view);
@@ -133,7 +133,7 @@ public class SetActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull SetAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
             holder.setIsRecyclable(false);
-            holder.title.setText("" + list.get(position).getTitle());
+            holder.quizTitle.setText("" + list.get(position).getTitle());
 
             try {
                 Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.logo).into(holder.imageView);
@@ -155,14 +155,14 @@ public class SetActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             CircleImageView imageView;
-            TextView title;
+            TextView quizTitle;
             LinearLayout liner;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                imageView = itemView.findViewById(R.id.img);
-                title = itemView.findViewById(R.id.title_txt);
-                liner = itemView.findViewById(R.id.liner);
+                imageView = itemView.findViewById(R.id.quizImg);
+                quizTitle = itemView.findViewById(R.id.quizTitle);
+                liner = itemView.findViewById(R.id.LinearLayout2);
             }
         }
     }

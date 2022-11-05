@@ -2,7 +2,7 @@ package com.example.raftaarquiz.AllActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,10 +88,10 @@ public class TestSeriesActivity extends AppCompatActivity {
                         String Name = jsonObject1.getString("Name");
                         String Image = jsonObject1.getString("Image");
 
-                        QuizCategories quizCategories = new QuizCategories(id, Name, Image,"","","");
+                        QuizCategories quizCategories = new QuizCategories(id, Name, Image, "", "", "");
                         listItems.add(quizCategories);
                     }
-                    recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     testSeriesAdapter = new TestSeriesAdapter(listItems);
                     recyclerView.setAdapter(testSeriesAdapter);
                     testSeriesAdapter.notifyDataSetChanged();
@@ -125,7 +124,7 @@ public class TestSeriesActivity extends AppCompatActivity {
         @NonNull
         @Override
         public TestSeriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_category, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_category_line, parent, false);
             context = parent.getContext();
 
             return new TestSeriesAdapter.ViewHolder(view);
@@ -134,7 +133,7 @@ public class TestSeriesActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull TestSeriesAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
             holder.setIsRecyclable(false);
-            holder.title.setText("" + list.get(position).getTitle());
+            holder.quizTitle.setText("" + list.get(position).getTitle());
 
             try {
                 Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.logo).into(holder.imageView);
@@ -156,14 +155,14 @@ public class TestSeriesActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             CircleImageView imageView;
-            TextView title;
+            TextView quizTitle;
             LinearLayout liner;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                imageView = itemView.findViewById(R.id.img);
-                title = itemView.findViewById(R.id.title_txt);
-                liner = itemView.findViewById(R.id.liner);
+                imageView = itemView.findViewById(R.id.quizImg);
+                quizTitle = itemView.findViewById(R.id.quizTitle);
+                liner = itemView.findViewById(R.id.LinearLayout2);
             }
         }
     }

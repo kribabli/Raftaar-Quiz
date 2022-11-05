@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -55,6 +56,7 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     QuestionNoAdapter questionNoAdapter;
     TextView timer;
     CountDownTimer countDownTimer;
+    TextView btnA, btnB, btnC, btnD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
         initMethod();
         setAction();
         getAllQuestionsList();
+        //for countDownTimer
         countDownTimer();
     }
 
@@ -76,6 +79,11 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
         option_d_txt = findViewById(R.id.option_d_txt);
         question_txt = findViewById(R.id.question_txt);
 
+        btnA = findViewById(R.id.btnA);
+        btnB = findViewById(R.id.btnB);
+        btnC = findViewById(R.id.btnC);
+        btnD = findViewById(R.id.btnD);
+
         submitBtn = findViewById(R.id.submitBtn);
         recyclerView = findViewById(R.id.recyclerView);
         progressDialog = new ProgressDialog(this);
@@ -83,15 +91,6 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
 
     private void setAction() {
         id = getIntent().getStringExtra("id");
-
-        submitBtn.setOnClickListener(view -> {
-            index.setValue(index.getValue() + 1);
-            setAllQuestion(index.getValue());
-            enableButton();
-            resetColor();
-            countDownTimer.cancel();
-            countDownTimer();
-        });
     }
 
     private void getAllQuestionsList() {
@@ -152,7 +151,7 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     }
 
     private void countDownTimer() {
-        countDownTimer = new CountDownTimer(15000, 1000) {
+        countDownTimer = new CountDownTimer(8000, 1000) {
             public void onTick(long millisUntilFinished) {
                 NumberFormat f = new DecimalFormat("1");
 
@@ -162,19 +161,31 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
 
                 long sec = (millisUntilFinished / 1000) % 60;
 
-                timer.setText("Timer : " + f.format(sec));
+                submitBtn.setClickable(false);
+                submitBtn.setText("Wait for " + f.format(sec) + " seconds");
             }
 
             public void onFinish() {
-                timer.setText("0");
-                this.start();
-                index.setValue(index.getValue() + 1);
-                setAllQuestion(index.getValue());
-                enableButton();
-                resetColor();
+                submitBtn.setClickable(true);
+                submitBtn.setText("Next");
+                submitBtn.setOnClickListener(view -> {
+                    submitBtn.setClickable(false);
+                    countDownTimer.cancel();
+                    countDownTimer.start();
+                    index.setValue(index.getValue() + 1);
+                    setAllQuestion(index.getValue());
+                    enableButton();
+                    resetColor();
+                });
             }
         };
         countDownTimer.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countDownTimer();
     }
 
     public void setAllQuestion(Integer value) {
@@ -186,7 +197,14 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
                 option_c_txt.setText(listOfQ.get(value).getoC());
                 option_d_txt.setText(listOfQ.get(value).getoD());
             } else {
-                showCustomDialog();
+                //for showCustomDialog
+                //showCustomDialog();
+                Intent intent = new Intent(TestSeriesQuestionActivity.this, FullDialogActivity.class);
+                intent.putExtra("rightCount", String.valueOf(rightCount.getValue()));
+                intent.putExtra("wrongCount", String.valueOf(wrongCount.getValue()));
+                intent.putExtra("totalQuestion", String.valueOf(index.getValue()));
+                startActivity(intent);
+                finish();
             }
         }
     }
@@ -222,46 +240,47 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     }
 
     public void enableButton() {
-        option_a_txt.setClickable(true);
-        option_b_txt.setClickable(true);
-        option_c_txt.setClickable(true);
-        option_d_txt.setClickable(true);
+        btnA.setClickable(true);
+        btnB.setClickable(true);
+        btnC.setClickable(true);
+        btnD.setClickable(true);
     }
 
     public void disableButton() {
-        option_a_txt.setClickable(false);
-        option_b_txt.setClickable(false);
-        option_c_txt.setClickable(false);
-        option_d_txt.setClickable(false);
+        btnA.setClickable(false);
+        btnB.setClickable(false);
+        btnC.setClickable(false);
+        btnD.setClickable(false);
     }
 
     public void resetColor() {
-        option_a_txt.setBackgroundColor(getResources().getColor(R.color.white));
-        option_b_txt.setBackgroundColor(getResources().getColor(R.color.white));
-        option_c_txt.setBackgroundColor(getResources().getColor(R.color.white));
-        option_d_txt.setBackgroundColor(getResources().getColor(R.color.white));
+        btnA.setBackgroundColor(getResources().getColor(R.color.white));
+        btnB.setBackgroundColor(getResources().getColor(R.color.white));
+        btnC.setBackgroundColor(getResources().getColor(R.color.white));
+        btnD.setBackgroundColor(getResources().getColor(R.color.white));
 
-        option_a_txt.setBackgroundResource(R.drawable.round_with_border);
-        option_b_txt.setBackgroundResource(R.drawable.round_with_border);
-        option_c_txt.setBackgroundResource(R.drawable.round_with_border);
-        option_d_txt.setBackgroundResource(R.drawable.round_with_border);
+        //1st question set no bg then click next the bg (By this code)
+        btnA.setBackgroundResource(R.drawable.c_vc_border_rounded);
+        btnB.setBackgroundResource(R.drawable.c_vc_border_rounded);
+        btnC.setBackgroundResource(R.drawable.c_vc_border_rounded);
+        btnD.setBackgroundResource(R.drawable.c_vc_border_rounded);
     }
 
     public void OptionAClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-            option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnA.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoA()) {
             wrongCount.setValue(wrongCount.getValue() + 1);
-            option_a_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnA.setBackgroundResource(R.drawable.circle);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
@@ -269,18 +288,18 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     public void OptionBClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-            option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnB.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoB()) {
-            option_b_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnB.setBackgroundResource(R.drawable.circle);
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
@@ -288,18 +307,18 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     public void OptionCClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-            option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnC.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoC()) {
-            option_c_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnC.setBackgroundResource(R.drawable.circle);
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-                option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnD.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
@@ -307,18 +326,18 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     public void OptionDClick(View view) {
         disableButton();
         if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoD())) {
-            option_d_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+            btnD.setBackgroundResource(R.drawable.circle_green);
             rightCount.setValue(rightCount.getValue() + 1);
             score_txt.setText("Score : " + rightCount.getValue());
         } else if (listOfQ.get(index.getValue()).getAns() != listOfQ.get(index.getValue()).getoD()) {
-            option_d_txt.setBackgroundColor(getResources().getColor(R.color.red));
+            btnD.setBackgroundResource(R.drawable.circle);
             wrongCount.setValue(wrongCount.getValue() + 1);
             if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoA())) {
-                option_a_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnA.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoB())) {
-                option_b_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnB.setBackgroundResource(R.drawable.circle_green);
             } else if (listOfQ.get(index.getValue()).getAns().equals(listOfQ.get(index.getValue()).getoC())) {
-                option_c_txt.setBackgroundColor(getResources().getColor(R.color.Green_Apple));
+                btnC.setBackgroundResource(R.drawable.circle_green);
             }
         }
     }
