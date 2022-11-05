@@ -2,7 +2,7 @@ package com.example.raftaarquiz.AllActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -91,7 +91,7 @@ public class TestSeriesActivity extends AppCompatActivity {
                         QuizCategories quizCategories = new QuizCategories(id, Name, Image, "", "", "");
                         listItems.add(quizCategories);
                     }
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    recyclerView.setLayoutManager(new GridLayoutManager(this,2));
                     testSeriesAdapter = new TestSeriesAdapter(listItems);
                     recyclerView.setAdapter(testSeriesAdapter);
                     testSeriesAdapter.notifyDataSetChanged();
@@ -124,7 +124,7 @@ public class TestSeriesActivity extends AppCompatActivity {
         @NonNull
         @Override
         public TestSeriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_category_line, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.test_series_exam_cat, parent, false);
             context = parent.getContext();
 
             return new TestSeriesAdapter.ViewHolder(view);
