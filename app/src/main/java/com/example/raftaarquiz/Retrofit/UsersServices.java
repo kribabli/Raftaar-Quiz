@@ -1,7 +1,7 @@
 package com.example.raftaarquiz.Retrofit;
 
 import com.example.raftaarquiz.Model.ProfileResponse;
-import com.example.raftaarquiz.Model.RegistrationResponse;
+import com.example.raftaarquiz.Model.ScoreResponse;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -14,16 +14,6 @@ import retrofit2.http.Part;
 
 public interface UsersServices {
 
-    @FormUrlEncoded
-    @POST("register.php")
-    Call<RegistrationResponse> SendUserDetails_server(
-            @Field("name") String username,
-            @Field("email") String email,
-            @Field("contact_number") String mobile_no,
-            @Field("password") String password,
-            @Field("gender") String gender
-    );
-
     @Multipart
     @POST("updateprofile.php")
     Call<ProfileResponse> UpdateProfileData(
@@ -34,5 +24,12 @@ public interface UsersServices {
             @Part("password") RequestBody password,
             @Part MultipartBody.Part image_url,
             @Part("gender") RequestBody gender
+    );
+
+    @FormUrlEncoded
+    @POST("score.php")
+    Call<ScoreResponse> SendUserScoreOnServer(
+            @Field("id") String id,
+            @Field("score") String score
     );
 }
