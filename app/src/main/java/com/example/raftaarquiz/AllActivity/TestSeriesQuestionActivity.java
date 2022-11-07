@@ -191,15 +191,15 @@ public class TestSeriesQuestionActivity extends AppCompatActivity {
     public void setAllQuestion(Integer value) {
         if (listOfQ.size() > 0) {
             if (listOfQ.size() > index.getValue()) {
-                question_txt.setText(listOfQ.get(value).getQuestions());
+                question_txt.setText("[" + (index.getValue() + 1) + "/" + listOfQ.size() + "]" + " Q_ " + listOfQ.get(value).getQuestions());
                 option_a_txt.setText(listOfQ.get(value).getoA());
                 option_b_txt.setText(listOfQ.get(value).getoB());
                 option_c_txt.setText(listOfQ.get(value).getoC());
                 option_d_txt.setText(listOfQ.get(value).getoD());
             } else {
-                //for showCustomDialog
-                //showCustomDialog();
-                Intent intent = new Intent(TestSeriesQuestionActivity.this, FullDialogActivity.class);
+                //next and finish Dialog
+//                showCustomDialog();
+                Intent intent = new Intent(TestSeriesQuestionActivity.this, FullDialogActivity1.class);
                 intent.putExtra("rightCount", String.valueOf(rightCount.getValue()));
                 intent.putExtra("wrongCount", String.valueOf(wrongCount.getValue()));
                 intent.putExtra("totalQuestion", String.valueOf(index.getValue()));

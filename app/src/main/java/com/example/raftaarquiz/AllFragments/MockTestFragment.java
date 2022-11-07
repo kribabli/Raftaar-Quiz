@@ -1,9 +1,12 @@
 package com.example.raftaarquiz.AllFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.raftaarquiz.AllActivity.TestSeriesQuestionActivity;
 import com.example.raftaarquiz.Model.MockTestPOJO;
 import com.example.raftaarquiz.R;
 import com.example.raftaarquiz.Retrofit.ApiClient;
@@ -149,13 +153,22 @@ public class MockTestFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MockTestAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MockTestAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
             holder.mockTestTitle.setText(list.get(position).getTitle());
             holder.totalQuestionMintsMarks.setText(list.get(position).getTotalQuestion() + " Qs. " + list.get(position).getQuestionTime() + " mins. " + list.get(position).getMarks() + " Marks");
 
             for (int i = 0; i < list.size(); i++) {
                 holder.noOfMockTest.setText("Mock " + (position + 1));
             }
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, TestSeriesQuestionActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -165,12 +178,14 @@ public class MockTestFragment extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView mockTestTitle, noOfMockTest, totalQuestionMintsMarks;
+            CardView cardView;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 mockTestTitle = itemView.findViewById(R.id.mockTestTitle);
                 noOfMockTest = itemView.findViewById(R.id.noOfMockTest);
                 totalQuestionMintsMarks = itemView.findViewById(R.id.totalQuestionMintsMarks);
+                cardView = itemView.findViewById(R.id.cardView);
             }
         }
     }

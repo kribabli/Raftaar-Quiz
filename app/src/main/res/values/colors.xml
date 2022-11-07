@@ -20,4 +20,6 @@
     <color name="light_gray">#F3F3F3</color>
     <color name="purple">#8E4EF0</color>
     <color name="purple1">#4E2C80</color>
+    <color name="light_green">#DFF1D6</color>
+    <color name="light_red">#F5DEDE</color>
 </resources>
