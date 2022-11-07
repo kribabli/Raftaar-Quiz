@@ -56,6 +56,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/RelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient1">
@@ -113,5 +114,28 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RelativeLayout">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/mockTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mock Test"
+            app:tabSelectedTextColor="@color/blue"
+            app:tabTextColor="@color/black" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabLayout"
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>

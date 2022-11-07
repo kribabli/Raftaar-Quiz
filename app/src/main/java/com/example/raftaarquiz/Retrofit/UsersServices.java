@@ -37,4 +37,10 @@ public interface UsersServices {
     Call<Object> getAvailableTestSeries(
             @Field("category") String category
     );
+
+    @FormUrlEncoded
+    @POST("mocktest.php")
+    Call<Object> getAllMockTest(
+            @Field("availablets") String availablets
+    );
 }
